@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="styles.css"/>
+        <script src="Chart.min.js"></script>
+    </head>
+
+    <body style="background-color: #fafafa;">
+        <h1> Helios </h1>
+
+        <div class="topRow">
+            <h3>Guage</h3>
+        </div>
+
+        <div class="topRow">
+            <h3>Picture/Comparison</h3>
+        </div>
+
+        <div class="topRow">
+            <h3>Money</h3>
+        </div>
+
+        <div id="barChart" class="bottomRow">
+            <h3>Graph</h3>
+            <canvas id="mycanvas" width="1100" height="300"></canvas>
+
+            <script>
+                var chrt = document.getElementById("mycanvas").getContext("2d");
+                var myarr = [65, 59, 80, 81, 56, 55, 40, 0, 50, 50, 50, 50];
+                var data = {
+                    labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], //x-axis
+                    datasets: [
+                        {
+                            label: "My Second dataset", //optional
+                            fillColor: "rgba(220,120,220,0.8)",
+                            strokeColor: "rgba(220,120,220,0.8)",
+                            highlightFill: "rgba(220,220,220,0.75)",
+                            highlightStroke: "rgba(220,220,220,1)",
+                            data: myarr
+                        }
+                    ]
+                };
+                var myFirstChart = new Chart(chrt).Bar(data);
+            </script>
+        </div>
+
+        <div id="weather" class="bottomRow">
+            <h3>Weather</h3>
+        </div>
+
+    </body>
+</html>

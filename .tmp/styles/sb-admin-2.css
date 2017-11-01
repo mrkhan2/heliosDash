@@ -40,6 +40,10 @@ body {
     height: 33vh;
 }
 
+.image{
+padding: 10000px;
+}
+
 .fixedT {
 
     height: 27vh;

@@ -6,7 +6,8 @@
     "url": "https://github.com/start-angular/sb-admin-angular"
   },
   "dependencies": {
-    "angular-weather-widget": "^1.2.4"
+    "angular-weather-widget": "^1.2.4",
+    "angularjs-gauge": "^2.1.1"
   },
   "devDependencies": {
     "grunt": "^0.4.1",

@@ -2,6 +2,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="">Solar Energy Dashboard</h1>
+        <button onclick="change()"> Click here</button>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -18,7 +19,7 @@
     </div>
     <div class="col-lg-4 col-sm-12" id="bar-chart" ng-controller="ChartCtrl">
         <div class="panel panel-default">
-            <div class="panel-heading">Energy Facts</div>
+            <div class="panel-heading" id="demo"></div>
             <div class="panel-body">
                  <div class = "fixedT">
                   <center><img src="../img/idea.png" height="150px" >
@@ -67,18 +68,20 @@
 
 </style>
 <script>
-   new Morris.Bar({
+
+  function change() {
+   Morris.Bar({
   // ID of the element in which to draw the chart.
   element: 'myfirstchart',
   // Chart data records -- each entry in this array corresponds to a point on
   // the chart.
   data: [
-    { month: 'January', value: 19 },
-    { month: 'February', value: 20 },
-    { month: 'March', value: 25 },
-    { month: 'April', value: 30 },
+    { month: 'January', value: 129 },
+    { month: 'February', value: 230 },
+    { month: 'March', value: 255 },
+    { month: 'April', value: 340 },
     { month: 'May', value: 33 },
-    { month: 'June', value: 36 },
+    { month: 'June', value: 316 },
     { month: 'July', value: 39 },
     { month: 'August', value: 38 },
     { month: 'September', value: 35 },
@@ -95,6 +98,42 @@
   labels: ['Value'], 
 }); 
 
+
+  };
+
+  var newChart ={
+element: 'myfirstchart',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  data: [
+    { month: 'January', value: 129 },
+    { month: 'February', value: 230 },
+    { month: 'March', value: 255 },
+    { month: 'April', value: 340 },
+    { month: 'May', value: 33 },
+    { month: 'June', value: 316 },
+    { month: 'July', value: 39 },
+    { month: 'August', value: 38 },
+    { month: 'September', value: 35 },
+    { month: 'October', value: 30 },
+    { month: 'November', value: 24 },
+    { month: 'December', value: 20 },
+  ],
+  // The name of the data record attribute that contains x-values.
+  xkey: 'month',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['value'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Value'], 
+
+
+
+  };
+
+   new Morris.Bar(newChart
+    ); 
+
 window.feed = function(callback) {
   var tick = {};
   tick.plot0 = Math.ceil(10 + (Math.random() * 9));
@@ -110,10 +149,32 @@ window.feed = function(callback) {
     gaugeWidthScale: 1.2,
     titleFontFamily: "Georgia",
     valueFontFamily: "Georgia"
-   
-   
-   
     
   });
- 
+
+  window.onload = function() { 
+    //console.log("MESSED UP");
+     ajaxRequest("https://api.myjson.com/bins/tm4ub",getData);
+        };
+
+
+  function ajaxRequest(url, callBack) { 
+    var ajax = new XMLHttpRequest(); 
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            console.log('responseText:' + ajax.responseText);
+                var dat = JSON.parse(ajax.responseText);
+            
+          }
+        }
+    ajax.open("GET", url, true); 
+    ajax.send(); 
+       document.getElementById("demo").innerHTML = dat.percentage;
+  
+ }
+
+ function getData() {   
+    var dat = JSON.parse(ajax.responseText);
+
+ }
 </script>

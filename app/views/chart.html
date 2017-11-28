@@ -2,7 +2,6 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="">Solar Energy Dashboard</h1>
-        <button onclick="change()"> Click here</button>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -69,37 +68,7 @@
 </style>
 <script>
 
-  function change() {
-   Morris.Bar({
-  // ID of the element in which to draw the chart.
-  element: 'myfirstchart',
-  // Chart data records -- each entry in this array corresponds to a point on
-  // the chart.
-  data: [
-    { month: 'January', value: 129 },
-    { month: 'February', value: 230 },
-    { month: 'March', value: 255 },
-    { month: 'April', value: 340 },
-    { month: 'May', value: 33 },
-    { month: 'June', value: 316 },
-    { month: 'July', value: 39 },
-    { month: 'August', value: 38 },
-    { month: 'September', value: 35 },
-    { month: 'October', value: 30 },
-    { month: 'November', value: 24 },
-    { month: 'December', value: 20 },
-  ],
-  // The name of the data record attribute that contains x-values.
-  xkey: 'month',
-  // A list of names of data record attributes that contain y-values.
-  ykeys: ['value'],
-  // Labels for the ykeys -- will be displayed when you hover over the
-  // chart.
-  labels: ['Value'], 
-}); 
 
-
-  };
 
   var newChart ={
 element: 'myfirstchart',

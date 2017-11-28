@@ -155,26 +155,24 @@ window.feed = function(callback) {
   window.onload = function() { 
     //console.log("MESSED UP");
      ajaxRequest("https://api.myjson.com/bins/tm4ub",getData);
+
         };
 
 
   function ajaxRequest(url, callBack) { 
     var ajax = new XMLHttpRequest(); 
-    ajax.onreadystatechange = function() {
-        if (ajax.readyState == 4 && ajax.status == 200) {
-            console.log('responseText:' + ajax.responseText);
-                var dat = JSON.parse(ajax.responseText);
-            
-          }
-        }
     ajax.open("GET", url, true); 
-    ajax.send(); 
-       document.getElementById("demo").innerHTML = dat.percentage;
-  
+    ajax.onreadystatechange = callBack;
+    ajax.send();   
  }
 
  function getData() {   
-    var dat = JSON.parse(ajax.responseText);
-
+      if (this.readyState == 4 && this.status == 200) {
+            console.log('responseText:' + this.responseText);
+                var dat = JSON.parse(this.responseText);
+                console.log(dat);
+            
+          }
+    document.getElementById("demo").innerHTML = dat.percentage;
  }
 </script>

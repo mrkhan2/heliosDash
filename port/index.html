@@ -44,6 +44,13 @@
     <script src="bower_components/justgage/justgage.js"></script>
 
 
+    <!-- gauge -->
+
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="http://code.highcharts.com/highcharts-more.js"></script>
+  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+
 
 
     <!-- endbower -->
@@ -83,10 +90,9 @@
 <div class="row">
     <div class="col-lg-4 col-sm-12" id="line-chart" ng-controller="ChartCtrl">
         <div class="panel panel-default">
-            <div class="panel-heading">Gauge</div>
+            <div class="panel-heading">Building Solar Energy %</div>
             <div class="panel-body">
-                <div class = "fixedT" id='gauge'>
-            </div>
+               <div   id="container-speed" style="min-width: 310px; max-width: 400px; height: 27vh; margin: 0 auto"></div>
             </div>
         </div>
     </div>
@@ -128,13 +134,15 @@
           <div class="panel-heading">Weather</div>
           <div class="panel-body">
              <div class = "fixed">      
-             <a href="https://www.accuweather.com/en/us/madison-wi/53715/weather-forecast/331530" class="aw-widget-legal"></a>
-            <div id="awcc1512247974374" class="aw-widget-current"  data-locationkey="" data-unit="f" data-language="en-us" data-useip="true" data-uid="awcc1512247974374"></div>
-            <script type="text/javascript" src="https://oap.accuweather.com/launch.js"></script>
 
             </div>
           </div>
         </div>
+    </div>
+                <div class="component__weather-box">
+  <div class="component__weather-content">
+    <div class="weather-content__overview"></div>
+    <div class="weather-content__temp"></div>
     </div>
 </div>
 </div>
@@ -142,7 +150,6 @@
 
 
 
-<script type="text/javascript" src="https:/oap.accuweather.com/launch.js"></script>
 
 <button onclick="weekChanger()">change to week data</button>
 <button onclick="yearChanger()">change to year data</button>
@@ -152,7 +159,89 @@
 
 
 <script>
-   
+
+var gaugeOptions = {
+
+    chart: {
+        type: 'solidgauge'
+    },
+
+    title: null,
+
+    pane: {
+        center: ['50%', '90%'],
+        size: '180%',
+        startAngle: -90,
+        endAngle: 90,
+        background: {
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+            innerRadius: '60%',
+            outerRadius: '100%',
+            shape: 'arc'
+        }
+    },
+
+    tooltip: {
+ valueSuffix: '% energy'
+        },
+
+    // the value axis
+    yAxis: {
+        stops: [
+            [0.1, '#DF5353'], // red
+            [0.5, '#DDDF0D'], // yellow
+            [0.9, '#55BF3B'] // greem
+        ],
+        lineWidth: 0,
+        minorTickInterval: null,
+        tickAmount: 2,
+        title: {
+            y: -70
+        },
+        labels: {
+            y: 16
+        }
+    },
+
+    plotOptions: {
+        solidgauge: {
+            dataLabels: {
+                y: 5,
+                borderWidth: 0,
+                useHTML: true
+            }
+        }
+    }
+};
+
+// The speed gauge
+var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 20,
+        title: {
+            text: ''
+        }
+    },
+
+    credits: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'percentage',
+        data: [18],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">% energy</span></div>'
+        },
+        tooltip: {
+            valueSuffix: '% energy'
+        }
+    }]
+
+}));
 google.charts.load('current', {packages: ['corechart', 'bar']});
 google.charts.setOnLoadCallback(drawBasic);
 
@@ -411,6 +500,105 @@ function drawBasic() {
 
         document.getElementById("cost").innerHTML = "$" + incomingData.moneySaved + " of energy was produced in the last year";
      }
+
+
+const CURRENT_LOCATION = document.getElementsByClassName('weather-content__overview')[0];
+const CURRENT_TEMP = document.getElementsByClassName('weather-content__temp')[0];
+const FORECAST = document.getElementsByClassName('component__forecast-box')[0];
+const URL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=Madison&cnt=7&units=imperial&APPID=e43f64ee98be9268f7a7f49e34aecfdf";
+
+// Use Fetch API to GET data from OpenWeather API
+// return json
+function getWeatherData() {
+  let headers = new Headers();
+
+  return fetch(URL, {
+    method: 'GET',
+    headers: headers
+  }).then(data => data.json());
+}
+
+// TUTORIAL READERS:
+// yeah, using an external resource for the icons and applying them here using a switch block
+function applyIcon(icon) {
+  let selectedIcon;
+  switch (icon) {
+    case '01d':
+      selectedIcon = "wi-day-sunny"
+      break;
+    case '01n':
+      selectedIcon = "wi-night-clear"
+      break;
+    case '02d':
+    case '02n':
+      selectedIcon = "wi-cloudy"
+      break;
+    case '03d':
+    case '03n':
+    case '04d':
+    case '04n':
+      selectedIcon = "wi-night-cloudy"
+      break;
+    case '09d':
+    case '09n':
+      selectedIcon = "wi-showers"
+      break;
+    case '10d':
+    case '10n':
+      selectedIcon = "wi-rain"
+      break;
+    case '11d':
+    case '11n':
+      selectedIcon = "wi-thunderstorm"
+      break;
+    case '13d':
+    case '13n':
+      selectedIcon = "wi-snow"
+      break;
+    case '50d':
+    case '50n':
+      selectedIcon = "wi-fog"
+      break;
+    default:
+      selectedIcon = "wi-meteor"
+  }
+  return selectedIcon;
+}
+
+// Use returned json from promise to render daily forecast
+renderData = (location, forecast) => {
+  // render city, current weather description and temp
+  const currentWeather = forecast[0].weather[0];
+  const widgetHeader = `<h1>${location.name}</h1><small>${currentWeather.description}</small>`;
+  CURRENT_TEMP.innerHTML = `<i class="wi ${applyIcon(currentWeather.icon)}"></i> ${Math.round(forecast[0].temp.day)} <i class="wi wi-degrees"></i>`;
+  CURRENT_LOCATION.innerHTML = widgetHeader;
+
+  // render each daily forecast
+  forecast.forEach(day => {
+    let date = new Date(day.dt * 1000);
+    let days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+    let name = days[date.getDay()];
+    let dayBlock = document.createElement("div");
+    dayBlock.className = 'forecast__item';
+    dayBlock.innerHTML = `<div class="forecast-item__heading">${name}</div>
+      <div class="forecast-item__info"><i class="wi ${applyIcon(day.weather[0].icon)}"></i> <span class="degrees">${Math.round(day.temp.day)}<i class="wi wi-degrees"></i></span></div>`;
+    FORECAST.appendChild(dayBlock);
+  });
+}
+
+// run/render the widget data
+getWeatherData().then(weatherData => {
+  let city = weatherData.city;
+  let dailyForecast = weatherData.list;
+
+  renderData(city, dailyForecast);
+});
+
+
+
+
+
+
 </script>
 
 

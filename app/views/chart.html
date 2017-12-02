@@ -54,7 +54,7 @@
           <div class="panel-heading">Weather</div>
           <div class="panel-body">
              <div class = "fixed">      
-              <iframe id="forecast_embed" frameborder="0" height="245" width="100%" src="//forecast.io/embed/#lat=43.062006&lon=-89.399872&font=Georgia&name=Madison"></iframe>
+              <iframe frameborder="0" height="245" width="100%" src="//forecast.io/embed/#lat=43.062006&lon=-89.399872&font=Georgia&name=Madison"></iframe>
             </div>
           </div>
         </div>
@@ -69,11 +69,7 @@
 
 <script>
 
-	window.feed = function(callback) {
-  		var tick = {};
-  		tick.plot0 = Math.ceil(10 + (Math.random() * 9));
-  		callback(JSON.stringify(tick));
-	};
+	
  
 	var g = new JustGage({
     	id: "gauge",

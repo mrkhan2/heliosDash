@@ -78,21 +78,19 @@
 
     </head>
    
-    <body>
-
-   <font face="Georgia"> <div class = "outside">
+<body>
+<font face="Georgia"> <div class = "outside">
 <div class="row">
     <div class="col-lg-12">
         <h1 id="title">Solar Energy Dashboard</h1>
     </div>
-    <!-- /.col-lg-12 -->
 </div>
 <div class="row">
     <div class="col-lg-4 col-sm-12" id="line-chart" ng-controller="ChartCtrl">
         <div class="panel panel-default">
             <div class="panel-heading">Building Solar Energy %</div>
             <div class="panel-body">
-               <div   id="container-speed" style="min-width: 310px; max-width: 400px; height: 27vh; margin: 0 auto"></div>
+               <div   id="gauge" style="min-width: 310px; max-width: 4000px; height: 27vh; margin: 0 auto"></div>
             </div>
         </div>
     </div>
@@ -121,11 +119,10 @@
 </div>
 <div class="row">
     <div class="col-lg-8 col-sm-12" id="radar-chart" ng-controller="ChartCtrl">
-        <div class="panel panel-default">
+        <div class="panel panel-default" >
             <div class="panel-heading">Energy Chart</div>
-            <div class="panel-body">
-            <div id="chart_div"></div>
-
+            <div class="panel-body" style = "height: 100%;">
+                <div id="chart_div" style = "height: 40vh;"></div>
             </div>
         </div>
     </div>
@@ -139,27 +136,23 @@
           </div>
         </div>
     </div>
-                <div class="component__weather-box">
-  <div class="component__weather-content">
-    <div class="weather-content__overview"></div>
-    <div class="weather-content__temp"></div>
-    </div>
-</div>
-</div>
+    <div class="component__weather-box"></div>
+  </div>
 </font>
 
-
-
-
-<button onclick="weekChanger()">change to week data</button>
-<button onclick="yearChanger()">change to year data</button>
-<button onclick="monthChanger()">change to year data</button>
-
-
+<!--Buttons to change timeframe  CHANGE TO DROPDOWN MENU FOR FINAL ITERATION-->
+<button onclick="changer('https://api.myjson.com/bins/tm4ub')">change to week data</button>
+<button onclick="changer('https://api.myjson.com/bins/7no1v')">change to month data</button>
+<button onclick="changer('https://api.myjson.com/bins/pxobn')">change to year data</button>
 
 
 <script>
 
+////////////////  
+//energy gauge//
+//////////////// 
+
+//options
 var gaugeOptions = {
 
     chart: {
@@ -182,8 +175,8 @@ var gaugeOptions = {
     },
 
     tooltip: {
- valueSuffix: '% energy'
-        },
+      valueSuffix: '% energy'
+      },
 
     // the value axis
     yAxis: {
@@ -214,8 +207,9 @@ var gaugeOptions = {
     }
 };
 
-// The speed gauge
-var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptions, {
+// function to create energy gauge
+function drawGauge(energyLevel){
+var chartSpeed = Highcharts.chart('gauge', Highcharts.merge(gaugeOptions, {
     yAxis: {
         min: 0,
         max: 20,
@@ -230,7 +224,7 @@ var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptio
 
     series: [{
         name: 'percentage',
-        data: [18],
+        data: [energyLevel],
         dataLabels: {
             format: '<div style="text-align:center"><span style="font-size:25px;color:' +
                 ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
@@ -242,30 +236,18 @@ var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptio
     }]
 
 }));
-google.charts.load('current', {packages: ['corechart', 'bar']});
-google.charts.setOnLoadCallback(drawBasic);
-
-function drawBasic() {
-
-      var data = new google.visualization.arrayToDataTable(
-        [
-         ['', 'Value'],
-         ['Jan', 8.94],            // RGB value
-         ['Feb', 10.49],            // English color name
-         ['March', 19.30],
-         ['April', 19.30],
-         ['May', 19.30],
-         ['June', 19.30],
-         ['July', 19.30],
-         ['Aug', 19.30],
-         ['Sep', 19.30],
-         ['Oct', 19.30],
-         ['Nov', 19.30],
-         ['Dec', 19.30],
-      ]
+}
 
 
-      );
+//////////////////////////////
+//draw google chart function//
+//////////////////////////////
+
+    google.charts.load('current', {packages: ['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawBasic);
+
+    function drawBasic() {
+      var data = new google.visualization.arrayToDataTable(weekChart);
 
       var options = {
         legend: { position: "none" },
@@ -278,110 +260,112 @@ function drawBasic() {
       chart.draw(data, options);
     }
 
-    window.feed = function(callback) {
-        var tick = {};
-        tick.plot0 = Math.ceil(10 + (Math.random() * 9));
-        callback(JSON.stringify(tick));
-    };
- 
-    var g = new JustGage({
-        id: "gauge",
-        value: 40,
-        min: 0,
-        max: 100,
-        title: "% of Building Energy",
-        gaugeWidthScale: 1.2,
-        titleFontFamily: "Georgia",
-        valueFontFamily: "Georgia"
-    });
+function drawChart(timeChart){
+    var data = new google.visualization.arrayToDataTable(timeChart);
 
-    var yearChart ={
-        // division id in html above where the graph will reside
-        element: 'myfirstchart',
-        //array of the month and energy value
-        data: [
-          { month: 'Jan', value: 129 },
-          { month: 'Feb', value: 230 },
-          { month: 'Mar', value: 255 },
-          { month: 'Apr', value: 340 },
-          { month: 'May', value: 33 },
-          { month: 'Jun', value: 316 },
-          { month: 'Jul', value: 39 },
-          { month: 'Aug', value: 38 },
-          { month: 'Sep', value: 35 },
-          { month: 'Oct', value: 30 },
-          { month: 'Nov', value: 24 },
-          { month: 'Dec', value: 20 },
-        ],
-        // The name of the data record attribute that contains x-values.
-        xkey: 'month',
-        // A list of names of data record attributes that contain y-values.
-        ykeys: ['value'],
-        // Labels for the ykeys -- will be displayed when you hover over the chart
-        labels: ['Value'], 
-    };
+      var options = {
+        legend: { position: "none" },
+        hAxis : {textColor: '#ffffff'}
+       };
 
-    var weekChart ={
-        element: 'myfirstchart',
-        data: [
-          { day: 'Sunday', value: 129 },
-          { day: 'Monday', value: 230 },
-          { day: 'Tuesday', value: 255 },
-          { day: 'Wednesday', value: 340 },
-          { day: 'Thursday', value: 33 },
-          { day: 'Friday', value: 316 },
-          { day: 'Saturday', value: 39 },
-        ],
-        xkey: 'day',
-        ykeys: ['value'],
-        labels: ['Value'], 
-    };
+      var chart = new google.charts.Bar(
+        document.getElementById('chart_div'));
 
-    var monthChart ={
-        element: 'myfirstchart',
-        data: [
-          { day: '1', value: 129 },
-          { day: '2', value: 129 },
-          { day: '3', value: 129 },
-            { day: '4', value: 129 },
-          { day: '5', value: 129 },
-          { day: '6', value: 129 },
-          { day: '7', value: 129 },
-          { day: '8', value: 129 },
-          { day: '9', value: 129 },
-          { day: '10', value: 129 },
-          { day: '11', value: 129 },
-          { day: '12', value: 129 },
-          { day: '13', value: 129 },
-          { day: '14', value: 129 },
-          { day: '15', value: 129 },
-          { day: '16', value: 129 },
-          { day: '17', value: 129 },
-          { day: '18', value: 129 },
-          { day: '19', value: 129 },
-          { day: '20', value: 129 },
-          { day: '21', value: 129 },
-          { day: '22', value: 129 },
-          { day: '23', value: 129 },
-          { day: '24', value: 129 },
-          { day: '25', value: 129 },
-          { day: '26', value: 129 },
-          { day: '27', value: 129 },
-          { day: '28', value: 129 },
-          { day: '29', value: 129 },
-          { day: '30', value: 129 },
-          { day: '31', value: 129 },
-        ],
-        xkey: 'day',
-        ykeys: ['value'],
-        labels: ['Value'], 
-    };
+      chart.draw(data, options);
+}
 
-   new Morris.Bar(yearChart); 
+/////////////////////////////////////////////
+//drawing gauge and google chart on startup//
+/////////////////////////////////////////////
+window.onload = function(){
+   changer('https://api.myjson.com/bins/zr1rv');
+};
 
-    function weekChanger(){
+/////////////////////////////////////////////////////////////////
+//updating every 10 seconds (change later 10min)  ////////////////
+/////////////////////////////////////////////////////////////////
+function repeatUpdate() {
+    changer('https://api.myjson.com/bins/zr1rv');
+}
+
+var i = setInterval(function() { repeatUpdate(); }, 10000);
+
+////////////////////////////////////////
+//chart data for week, month, and year//
+////////////////////////////////////////
+
+    var weekChart = [
+         ['', 'Value'],
+         ['Sunday', 8.94],         
+         ['Monday', 10.49],           
+         ['Tuesday', 19.30],
+         ['Wednesday', 19.30],
+         ['Thursday', 19.30],
+         ['Friday', 19.30],
+         ['Saturday', 29.30],
+      ];
+
+      var monthChart =[
+         ['', 'Value'],
+         ['1', 8.94],         
+         ['2', 10.49],           
+         ['3', 19.30],
+         ['4', 19.30],
+         ['5', 19.30],
+         ['6', 19.30],
+         ['7', 29.30],
+         ['8', 9.30],
+         ['9', 19.30],
+         ['10', 19.30],
+         ['11', 8.94],         
+         ['12', 10.49],           
+         ['13', 19.30],
+         ['14', 19.30],
+         ['15', 19.30],
+         ['16', 19.30],
+         ['17', 29.30],
+         ['18', 9.30],
+         ['19', 19.30],
+         ['20', 19.30],
+         ['21', 8.94],         
+         ['22', 10.49],           
+         ['23', 19.30],
+         ['24', 19.30],
+         ['25', 19.30],
+         ['26', 19.30],
+         ['27', 29.30],
+         ['28', 9.30],
+         ['29', 19.30],
+         ['30', 19.30],
+         ['31', 55],
+        ];
+
+      var yearChart =[
+         ['', 'Value'],
+         ['Jan', 8.94],         
+         ['Feb', 10.49],           
+         ['Mar', 19.30],
+         ['Apr', 19.30],
+         ['May', 19.30],
+         ['Jun', 19.30],
+         ['Jul', 29.30],
+         ['Aug', 9.30],
+         ['Sep', 19.30],
+         ['Oct', 19.30],
+         ['Nov', 29.30],
+         ['Dec', 9.30],
+        ];
+
+
+
+///////////////////////////////////////////////////
+//Changer function (stupid name, rename later)  //
+//use ajax to get data and decide timefrime      //
+///////////////////////////////////////////////////
+
+    function changer(url){
         var ourRequest = new XMLHttpRequest();
-        ourRequest.open('GET', 'https://api.myjson.com/bins/tm4ub');
+        ourRequest.open('GET', url);
         ourRequest.onload = function() {
             var ourData = JSON.parse(ourRequest.responseText);
             console.log(ourData);
@@ -390,218 +374,93 @@ function drawBasic() {
         ourRequest.send();
         function renderHTML(data) {
             if(data.values.length == 7)
-                drawWeekChart(data);
+                drawWeekPanels(data);
             else if (data.values.length == 12)
-                drawYearChart(data);
-        }
-     }
-
-     function yearChanger(){
-        var ourRequest = new XMLHttpRequest();
-        ourRequest.open('GET', 'https://api.myjson.com/bins/pxobn');
-        ourRequest.onload = function() {
-            var ourData = JSON.parse(ourRequest.responseText);
-            console.log(ourData);
-            renderHTML(ourData);
-        };
-        ourRequest.send();
-        function renderHTML(data) {
-            if(data.values.length == 7)
-                drawWeekChart(data);
-            else if (data.values.length == 12)
-                drawYearChart(data);
-        }
-     }
-
-     function monthChanger(){
-        var ourRequest = new XMLHttpRequest();
-        ourRequest.open('GET', 'https://api.myjson.com/bins/7no1v');
-        ourRequest.onload = function() {
-            var ourData = JSON.parse(ourRequest.responseText);
-            console.log(ourData);
-            renderHTML(ourData);
-        };
-        ourRequest.send();
-        function renderHTML(data) {
-            if(data.values.length == 7)
-                drawWeekChart(data);
-            else if (data.values.length == 12)
-                drawYearChart(data);
+                drawYearPanels(data);
             else if (data.values.length == 31)
-                drawMonthChart(data);
+                drawMonthPanels(data);
         }
-     }  
+     }
 
-     function drawWeekChart(incomingData){
-        for(i = 0; i < 7; i++)
-            weekChart.data[i].value = incomingData.values[i];
-        $('#myfirstchart').empty();
-        new Morris.Bar(weekChart); 
+//////////////////////////////////////////
+//Drawing Functions for the 3 timeframes//
+//Must clear chart and gauge each time  //
+//COMBINE INTO ONE FUNCTION LATER       //
+//////////////////////////////////////////
 
+    //updating page if timeframe is a week
+    function drawWeekPanels(incomingData){
+        //clearing guage and chart panels before writing new data
         $('#gauge').empty();
-            var g = new JustGage({
-            id: "gauge",
-            value: incomingData.percentage,
-            min: 0,
-            max: 100,
-            title: "% of Building Energy",
-            gaugeWidthScale: 1.2,
-            titleFontFamily: "Georgia",
-            valueFontFamily: "Georgia"
-        });
+        $('#chart_div').empty();
 
+        //loading in new week data for chart
+        for(i = 0; i < 7; i++)
+            weekChart[i+1][1] = incomingData.values[i];
+
+        //creating new chart
+        drawChart(weekChart);
+
+        //drawing new gauge
+        drawGauge(incomingData.percentage);
+
+        //writing new analogy sentenc
         document.getElementById("enAnalogy").innerHTML = "You could power " + incomingData.energyAnalogyValue + " lightbulbs for a day with the energy produced by these solar panels in a week";
 
+        //writing new cost sentence
         document.getElementById("cost").innerHTML = "$" + incomingData.moneySaved + " of energy was produced in the last week";
      }
 
-     function drawMonthChart(incomingData){
-        for(i = 0; i < 31; i++)
-            monthChart.data[i].value = incomingData.values[i];
-        $('#myfirstchart').empty();
-        new Morris.Bar(monthChart); 
 
+
+    //updating page if timeframe is a month
+    function drawMonthPanels(incomingData){
+        //clearing guage and chart panels before writing new data
         $('#gauge').empty();
-            var g = new JustGage({
-            id: "gauge",
-            value: incomingData.percentage,
-            min: 0,
-            max: 100,
-            title: "% of Building Energy",
-            gaugeWidthScale: 1.2,
-            titleFontFamily: "Georgia",
-            valueFontFamily: "Georgia"
-        });
+        $('#chart_div').empty();
 
+        //loading in new week data for chart
+        for(i = 0; i < 31; i++)
+            monthChart[i+1][1] = incomingData.values[i];
+
+        //creating new chart
+        drawChart(monthChart);
+
+        //drawing new gauge
+        drawGauge(incomingData.percentage);
+
+        //writing new analogy sentenc
         document.getElementById("enAnalogy").innerHTML = "You could power " + incomingData.energyAnalogyValue + " lightbulbs for a day with the energy produced by these solar panels in a month";
 
+        //writing new cost sentence
         document.getElementById("cost").innerHTML = "$" + incomingData.moneySaved + " of energy was produced in the last month";
      }
 
-     function drawYearChart(incomingData){
-        for(i = 0; i < 12; i++)
-            yearChart.data[i].value = incomingData.values[i];
-        $('#myfirstchart').empty();
-        new Morris.Bar(yearChart); 
 
+
+    //updating page if timeframe is a year
+    function drawYearPanels(incomingData){
+        //clearing guage and chart panels before writing new data
         $('#gauge').empty();
-            var g = new JustGage({
-            id: "gauge",
-            value: incomingData.percentage,
-            min: 0,
-            max: 100,
-            title: "% of Building Energy",
-            gaugeWidthScale: 1.2,
-            titleFontFamily: "Georgia",
-            valueFontFamily: "Georgia"
-        });
+        $('#chart_div').empty();
 
-        document.getElementById("enAnalogy").innerHTML = "You could power " + incomingData.energyAnalogyValue + " lightbulbs for a day with the energy produced by these solar panels in a year";
+        //loading in new week data for chart
+        for(i = 0; i < 12; i++)
+            yearChart[i+1][1] = incomingData.values[i];
 
+        //creating new chart
+        drawChart(yearChart);
+
+        //drawing new gauge
+        drawGauge(incomingData.percentage);
+
+        //writing new analogy sentenc
+       document.getElementById("enAnalogy").innerHTML = "You could power " + incomingData.energyAnalogyValue + " lightbulbs for a day with the energy produced by these solar panels in a year";
+
+        //writing new cost sentence
         document.getElementById("cost").innerHTML = "$" + incomingData.moneySaved + " of energy was produced in the last year";
      }
 
-
-const CURRENT_LOCATION = document.getElementsByClassName('weather-content__overview')[0];
-const CURRENT_TEMP = document.getElementsByClassName('weather-content__temp')[0];
-const FORECAST = document.getElementsByClassName('component__forecast-box')[0];
-const URL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=Madison&cnt=7&units=imperial&APPID=e43f64ee98be9268f7a7f49e34aecfdf";
-
-// Use Fetch API to GET data from OpenWeather API
-// return json
-function getWeatherData() {
-  let headers = new Headers();
-
-  return fetch(URL, {
-    method: 'GET',
-    headers: headers
-  }).then(data => data.json());
-}
-
-// TUTORIAL READERS:
-// yeah, using an external resource for the icons and applying them here using a switch block
-function applyIcon(icon) {
-  let selectedIcon;
-  switch (icon) {
-    case '01d':
-      selectedIcon = "wi-day-sunny"
-      break;
-    case '01n':
-      selectedIcon = "wi-night-clear"
-      break;
-    case '02d':
-    case '02n':
-      selectedIcon = "wi-cloudy"
-      break;
-    case '03d':
-    case '03n':
-    case '04d':
-    case '04n':
-      selectedIcon = "wi-night-cloudy"
-      break;
-    case '09d':
-    case '09n':
-      selectedIcon = "wi-showers"
-      break;
-    case '10d':
-    case '10n':
-      selectedIcon = "wi-rain"
-      break;
-    case '11d':
-    case '11n':
-      selectedIcon = "wi-thunderstorm"
-      break;
-    case '13d':
-    case '13n':
-      selectedIcon = "wi-snow"
-      break;
-    case '50d':
-    case '50n':
-      selectedIcon = "wi-fog"
-      break;
-    default:
-      selectedIcon = "wi-meteor"
-  }
-  return selectedIcon;
-}
-
-// Use returned json from promise to render daily forecast
-renderData = (location, forecast) => {
-  // render city, current weather description and temp
-  const currentWeather = forecast[0].weather[0];
-  const widgetHeader = `<h1>${location.name}</h1><small>${currentWeather.description}</small>`;
-  CURRENT_TEMP.innerHTML = `<i class="wi ${applyIcon(currentWeather.icon)}"></i> ${Math.round(forecast[0].temp.day)} <i class="wi wi-degrees"></i>`;
-  CURRENT_LOCATION.innerHTML = widgetHeader;
-
-  // render each daily forecast
-  forecast.forEach(day => {
-    let date = new Date(day.dt * 1000);
-    let days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
-    let name = days[date.getDay()];
-    let dayBlock = document.createElement("div");
-    dayBlock.className = 'forecast__item';
-    dayBlock.innerHTML = `<div class="forecast-item__heading">${name}</div>
-      <div class="forecast-item__info"><i class="wi ${applyIcon(day.weather[0].icon)}"></i> <span class="degrees">${Math.round(day.temp.day)}<i class="wi wi-degrees"></i></span></div>`;
-    FORECAST.appendChild(dayBlock);
-  });
-}
-
-// run/render the widget data
-getWeatherData().then(weatherData => {
-  let city = weatherData.city;
-  let dailyForecast = weatherData.list;
-
-  renderData(city, dailyForecast);
-});
-
-
-
-
-
-
 </script>
-
-
-    </body>
-
+</body>
 </html>

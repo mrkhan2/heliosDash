@@ -122,7 +122,7 @@
         <div class="panel panel-default" >
             <div class="panel-heading">Energy Chart</div>
             <div class="panel-body" style = "height: 100%;">
-                <div id="chart_div" style = "height: 40vh;"></div>
+                <div id="chart_div" style = "height: 33vh;"></div>
             </div>
         </div>
     </div>
@@ -130,8 +130,9 @@
         <div class="panel panel-default">
           <div class="panel-heading">Weather</div>
           <div class="panel-body">
-             <div class = "fixed">      
-
+             <div id="weatherPanel" class = "fixed">      
+                <img src="http://openweathermap.org/img/w/10d.png" alt="Smiley face" height="100%">
+                
             </div>
           </div>
         </div>
@@ -145,6 +146,10 @@
 <button onclick="changer('https://api.myjson.com/bins/7no1v')">change to month data</button>
 <button onclick="changer('https://api.myjson.com/bins/pxobn')">change to year data</button>
 
+<br/>
+<p id="weatherTest">This should be changed to temp on button press</p>
+<br/>
+<button onclick="weatherAPItest('http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial')">weatherAPI</button>
 
 <script>
 
@@ -382,6 +387,24 @@ var i = setInterval(function() { repeatUpdate(); }, 10000);
         }
      }
 
+
+function weatherAPItest(url){
+        var ourRequest = new XMLHttpRequest();
+        ourRequest.open('GET', url);
+        ourRequest.onload = function() {
+            var ourData = JSON.parse(ourRequest.responseText);
+            console.log(ourData);
+            renderHTML(ourData);
+        };
+        ourRequest.send();
+        function renderHTML(data) {
+            document.getElementById("weatherTest").innerHTML = data.main.temp;
+        var iconCode = data.weather[0].icon;
+        var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
+        var style = "style = &quot; width:100%; height:100%; &quot;";
+        $("#weatherPanel").html("  <img src='" + iconUrl + "'" + style + ">");
+        }
+     }
 //////////////////////////////////////////
 //Drawing Functions for the 3 timeframes//
 //Must clear chart and gauge each time  //

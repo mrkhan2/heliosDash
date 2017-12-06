@@ -186,7 +186,9 @@ img2{
 //keeping track of testing values:
 var timescale;
 var weatherIdTest;
-var urlBase = "http://urlBase.com/?timescale="
+var urlBase = "http://urlBase.com/?timescale=";
+var firstStatement = "You could power ";
+var secondStatement = " lightbulbs for a day with the energy produced by these solar panels in a week";
 
 ////////////////  
 //energy gauge//
@@ -507,6 +509,10 @@ function weatherAPItest(url){
         //drawing new gauge
         drawGauge(incomingData.percentage);
 
+        //updating analogy statements
+        //firstStatement = incomingData.firstStatement;
+        //secondStatement = incomingData.secondStatement;
+
         //writing new analogy sentenc
         document.getElementById("enAnalogy").innerHTML = "You could power " + incomingData.energyAnalogyValue + " lightbulbs for a day with the energy produced by these solar panels in a week";
 
@@ -532,7 +538,7 @@ function weatherAPItest(url){
         //drawing new gauge
         drawGauge(incomingData.percentage);
 
-        //writing new analogy sentenc
+        //writing new analogy sentence
         document.getElementById("enAnalogy").innerHTML = "You could power " + incomingData.energyAnalogyValue + " lightbulbs for a day with the energy produced by these solar panels in a month";
 
         //writing new cost sentence

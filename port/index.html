@@ -172,19 +172,14 @@ img2{
 <button onclick="changer('https://api.myjson.com/bins/7no1v')">change to month data</button>
 <button onclick="changer('https://api.myjson.com/bins/pxobn')">change to year data</button>
 
-<br/>
-<p>Madison Temp: </p>
-<p id="weatherTest">This should be changed to temp on button press</p>
-<br/>
-<button onclick="weatherAPItest('http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial')">weatherAPI</button>
-<p>Weather Id:</p>
-<p id="weatherIdTest">showing weather Id</p>
-<p>Timescale: </p>
-<p id="timescaleTest">showing timescale</p>
-<p>Query URL:</p>
-<p id="queryTest">showing query url</p>
 
-<img src="img/idea.png" style="height:3vh">
+
+
+<p style=" color: white;">Timescale: </p>
+<p style=" color: white;" id="timescaleTest">showing timescale</p>
+<p style=" color: white;">Query URL:</p>
+<p style=" color: white;" id="queryTest">showing query url</p>
+
 
 <script>
 
@@ -466,9 +461,7 @@ function weatherAPItest(url){
         };
         ourRequest.send();
         function renderHTML(data) {
-            document.getElementById("weatherTest").innerHTML = data.main.temp;
         var weatherId = data.weather[0].id;
-        document.getElementById("weatherIdTest").innerHTML = weatherId;
         var seconds = new Date() / 1000;
         if(weatherId < 300)
           weatherImage = "img/thunderstorm.png";

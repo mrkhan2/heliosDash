@@ -64,6 +64,24 @@
 
 
     <!-- Custom CSS -->
+        <style>
+h3 {
+  font-size: 2.5vh;
+
+  
+}
+img{
+  height: 15vh;
+}
+img2{
+  height: 15vh;
+  float: left;
+}
+ h1{
+     color: white;
+ }
+
+</style>
 
     <!-- Custom Fonts -->
 
@@ -78,7 +96,8 @@
 
     </head>
    
-<body>
+<body background="img/nature.jpg" >
+
 <font face="Georgia"> <div class = "outside">
 <div class="row">
     <div class="col-lg-12">
@@ -99,7 +118,7 @@
             <div class="panel-heading" id="demo">Energy Analogy</div>
             <div class="panel-body">
                  <div class = "fixedT">
-                  <center><img src="img/idea.png" height="150px" >
+                  <center><img src="img/idea.png" >
                   <h3 id="enAnalogy"> You could power 10 lightbulbs for a day with the energy produced by these solar panels </h3></center>
             </div>
             </div>
@@ -110,7 +129,7 @@
             <div class="panel-heading">Dollars Saved</div>
             <div class="panel-body">
             <div class = "fixedT">
-               <center><img src="img/banknote.png" height="150px" >
+               <center><img src="img/banknote.png" >
                 <h3 id="cost"> $10,000 of energy was produced in the last month </h3></center>
             </div>
             </div>
@@ -131,14 +150,8 @@
           <div class="panel-heading">Weather</div>
           <div class="panel-body">
              <div id="weatherPanel" class = "fixed">      
-                <b>Madison</b>
-                <hr color="black" style="height:5px;">
-                <div width = "25%" style="text-align: center; display: inline-block;">
-                    <p id="weatherTemp" style="font-size: 10rem">      paragrapha &#176; df &#x2109;</p>
-                </div>
-                <div id="weatherPic" width = "65%" style="text-align: center; display: inline-block;">
-                  <img src="img/idea.png" style="height:10vh">
-                </div>
+                <img src="http://openweathermap.org/img/w/10d.png" alt="Smiley face" height="100%">
+                
             </div>
           </div>
         </div>
@@ -153,25 +166,11 @@
 <button onclick="changer('https://api.myjson.com/bins/pxobn')">change to year data</button>
 
 <br/>
-<p>Madison Temp: </p>
 <p id="weatherTest">This should be changed to temp on button press</p>
 <br/>
 <button onclick="weatherAPItest('http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial')">weatherAPI</button>
-<p>Weather Id:</p>
-<p id="weatherIdTest">showing weather Id</p>
-<p>Timescale: </p>
-<p id="timescaleTest">showing timescale</p>
-<p>Query URL:</p>
-<p id="queryTest">showing query url</p>
-
-<img src="img/idea.png" style="height:3vh">
 
 <script>
-
-//keeping track of testing values:
-var timescale;
-var weatherIdTest;
-var urlBase = "http://urlBase.com/?timescale="
 
 ////////////////  
 //energy gauge//
@@ -267,6 +266,13 @@ var chartSpeed = Highcharts.chart('gauge', Highcharts.merge(gaugeOptions, {
 //////////////////////////////
 //draw google chart function//
 //////////////////////////////
+//create trigger to resizeEnd event     
+$(window).resize(function() {
+    if(this.resizeTO) clearTimeout(this.resizeTO);
+    this.resizeTO = setTimeout(function() {
+        $(this).trigger('resizeEnd');
+    }, 50);
+});
 
     google.charts.load('current', {packages: ['corechart', 'bar']});
     google.charts.setOnLoadCallback(drawBasic);
@@ -281,8 +287,10 @@ var chartSpeed = Highcharts.chart('gauge', Highcharts.merge(gaugeOptions, {
 
       var chart = new google.charts.Bar(
         document.getElementById('chart_div'));
-
+        
+$(window).on('resizeEnd', function() {
       chart.draw(data, options);
+      });
     }
 
 function drawChart(timeChart){
@@ -301,27 +309,19 @@ function drawChart(timeChart){
 
 /////////////////////////////////////////////
 //drawing gauge and google chart on startup//
-//should go to initialization url          //
 /////////////////////////////////////////////
 window.onload = function(){
    changer('https://api.myjson.com/bins/zr1rv');
-   weatherAPItest('http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial')
 };
 
 /////////////////////////////////////////////////////////////////
 //updating every 10 seconds (change later 10min)  ////////////////
 /////////////////////////////////////////////////////////////////
 function repeatUpdate() {
-    weatherAPItest('http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial')
-    if(timescale == "week")
-        changer('https://api.myjson.com/bins/tm4ub');
-    else if(timescale == "month")
-        changer('https://api.myjson.com/bins/7no1v');
-    else if(timescale == "year")
-        changer('https://api.myjson.com/bins/pxobn');
+    changer('https://api.myjson.com/bins/zr1rv');
 }
 
-var i = setInterval(function() { repeatUpdate(); }, 15000);
+var i = setInterval(function() { repeatUpdate(); }, 10000);
 
 ////////////////////////////////////////
 //chart data for week, month, and year//
@@ -406,24 +406,12 @@ var i = setInterval(function() { repeatUpdate(); }, 15000);
         };
         ourRequest.send();
         function renderHTML(data) {
-            if(data.values.length == 7){
-                timescale = "week";
-                document.getElementById("timescaleTest").innerHTML = timescale;
-                document.getElementById("queryTest").innerHTML = urlBase + timescale;
+            if(data.values.length == 7)
                 drawWeekPanels(data);
-            }
-            else if (data.values.length == 12){
-                timescale = "year";
-                document.getElementById("timescaleTest").innerHTML = timescale;
-                document.getElementById("queryTest").innerHTML = urlBase + timescale;
+            else if (data.values.length == 12)
                 drawYearPanels(data);
-            }
-            else if (data.values.length == 31){
-                timescale = "month";
-                document.getElementById("timescaleTest").innerHTML = timescale;
-                document.getElementById("queryTest").innerHTML = urlBase + timescale;
+            else if (data.values.length == 31)
                 drawMonthPanels(data);
-            }
         }
      }
 
@@ -439,30 +427,11 @@ function weatherAPItest(url){
         ourRequest.send();
         function renderHTML(data) {
             document.getElementById("weatherTest").innerHTML = data.main.temp;
-        var weatherId = data.weather[0].id;
-        document.getElementById("weatherIdTest").innerHTML = weatherId;
-        var seconds = new Date() / 1000;
-        if(weatherId < 300)
-          weatherImage = "img/thunderstorm.png";
-        else if(weatherId < 600)
-          weatherImage = "img/raining.png";
-        else if(weatherId < 700)
-          weatherImage = "img/snowing.png";
-        else if(weatherId == 800){
-              if((seconds < data.sys.sunrise) || (seconds > data.sys.sunset))
-                  weatherImage = "img/moon.png";
-              else
-                weatherImage = "img/sunny.png";
+        var iconCode = data.weather[0].icon;
+        var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
+        var style = "style = &quot; width:100%; height:100%; &quot;";
+        $("#weatherPanel").html("  <img src='" + iconUrl + "'" + style + ">");
         }
-        else if(weatherId < 803)
-          weatherImage = "img/partlyCloudy.png";
-        else
-          weatherImage = "img/cloudy.png";
-
-        $("#weatherPic").html(" <img src=" + weatherImage + ' style="height:23vh"> ');
-        $("#weatherTemp").html("&nbsp;&nbsp;&nbsp;" + Math.round(data.main.temp) + " &#176;&nbsp;");
-        }
-
      }
 //////////////////////////////////////////
 //Drawing Functions for the 3 timeframes//

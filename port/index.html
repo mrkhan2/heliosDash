@@ -151,13 +151,15 @@ img2{
           <div class="panel-body">
              <div id="weatherPanel" class = "fixed">      
                 <b>Madison</b>
-                <hr color="black" style="height:5px;">
-                <div width = "25%" style="text-align: center; display: inline-block;">
-                    <p id="weatherTemp" style="font-size: 10rem">      paragrapha &#176; df &#x2109;</p>
+                <hr color="black" style="height:.7vh; margin-top: 1vh;">
+                <center>
+                <div class="weather">
+                    <p id="weatherTemp" style="font-size: 8vh;" >   </p>
                 </div>
-                <div id="weatherPic" width = "65%" style="text-align: center; display: inline-block;">
-                  <img src="img/idea.png" style="height:10vh">
+                <div id="weatherPic" class ="weather">
+                  <img src="img/idea.png">
                 </div>
+                </center>
             </div>
           </div>
         </div>
@@ -487,7 +489,7 @@ function weatherAPItest(url){
           weatherImage = "img/cloudy.png";
 
         $("#weatherPic").html(" <img src=" + weatherImage + ' style="height:23vh"> ');
-        $("#weatherTemp").html("&nbsp;&nbsp;&nbsp;" + Math.round(data.main.temp) + " &#176;&nbsp;");
+        $("#weatherTemp").html(Math.round(data.main.temp) + " &#176;&nbsp;");
         }
 
      }

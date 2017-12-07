@@ -138,7 +138,7 @@ img2{
             <div class="panel-body">
             <div class = "fixedT">
                <center><img src="img/banknote.png" >
-                <h3 id="cost"> $10,000 of energy was produced in the last month </h3></center>
+                <h3 id="cost"> $10,000 of energy was produced last month </h3></center>
             </div>
             </div>
         </div>
@@ -180,6 +180,13 @@ img2{
 <button onclick="changer('https://api.myjson.com/bins/7no1v')">change to month data</button>
 <button onclick="changer('https://api.myjson.com/bins/pxobn')">change to year data</button>
 
+<!--
+    TO ACTUALLY CONNECT TO BACKEND, DELETE ABOVE BUTTONS AND UNCOMMENT THESE!!!
+<button onclick="changer(urlBase + "week")">change to week data</button>
+<button onclick="changer(urlBase + "week")">change to month data</button>
+<button onclick="changer(urlBase + "week")">change to year data</button>
+-->
+
 <p style=" color: white;">Timescale: </p>
 <p style=" color: white;" id="timescaleTest">showing timescale</p>
 <p style=" color: white;">Query URL:</p>
@@ -187,12 +194,13 @@ img2{
 
 
 <script>
-
-//keeping track of testing values:
-var timescale;
-var weatherIdTest;
+//TO ACTUALLY CONNECT TO BACKEND, UNCOMMENT VAR URLINIT AND FILL IN THE URL
 //var urlInit = "";
 var urlBase = "http://urlBase.com/?timescale=";
+
+//keeps track of what timescale the dashboard is displaying
+var timescale;
+//keeps track of analogy statements
 var firstStatement = "You could power ";
 var secondStatement = " lightbulbs for a day with the energy produced by these solar panels in a week";
 
@@ -331,25 +339,23 @@ function drawChart(timeChart){
       chart.draw(data, options);
 }
 
-/////////////////////////////////////////////
-//drawing gauge and google chart on startup//
-/////////////////////////////////////////////
+/////////////////////////////////////////////////
+//read initialization json data on startup and //
+//draw all the panels                          //
+/////////////////////////////////////////////////
 window.onload = function(){
-
-  //changer(urlInit);
-  //grab('https://api.myjson.com/bins/ui45j');
-  grab('https://api.myjson.com/bins/12xed3');
-
+  initChanger('https://api.myjson.com/bins/12xed3');
   weatherAPItest('http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial');
-
 };
 
-/////////////////////////////////////////////////////////////////
-//updating every 10 seconds (change later 10min)  ////////////////
-/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+//Reseting every pannel every so many milliseconds//
+////////////////////////////////////////////////////
+var i = setInterval(function() { repeatUpdate(); }, 2000);
+
 function repeatUpdate() {
     weatherAPItest('http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial');
-
+    //UNCOMMENT CODE BELOW HERE AND DELETE IF ELSE STATEMENT BELOW TO CONNECT WITH BACKEND!!!
     //changer(urlBase + timescale);
     if(timescale == "week")
         changer('https://api.myjson.com/bins/yishj');
@@ -359,7 +365,6 @@ function repeatUpdate() {
         changer('https://api.myjson.com/bins/pxobn');
 }
 
-var i = setInterval(function() { repeatUpdate(); }, 20000);
 
 ////////////////////////////////////////
 //chart data for week, month, and year//
@@ -434,19 +439,21 @@ var i = setInterval(function() { repeatUpdate(); }, 20000);
 //use ajax to get data and decide timefrime      //
 ///////////////////////////////////////////////////
 
-    function grab(url){
+    function initChanger(url){
         var ourRequest = new XMLHttpRequest();
         ourRequest.open('GET', url);
         ourRequest.onload = function() {
             var ourData = JSON.parse(ourRequest.responseText);
             console.log(ourData);
-            renderHTMLgrab(ourData);
+            renderHTML(ourData);
         };
         ourRequest.send();
-         function renderHTMLgrab(data) {
+         function renderHTML(data) {
             timescale = data.timescale;
             firstStatement = data.string1;
             secondStatement = data.string2;
+//TO ACTUALLY WORK WITH BACK END, UNCOMMENT SINGLE LINE AND DELETE IF/ELSE STATEMENT
+//          changer(urlBase + timescale);
             if(timescale == "week")
                 changer('https://api.myjson.com/bins/tm4ub');
             else if(timescale == "month")
@@ -544,16 +551,11 @@ function weatherAPItest(url){
         //drawing new gauge
         drawGauge(parseInt(incomingData.percentage));
 
-        //updating analogy statements
-        //firstStatement = incomingData.firstStatement;
-        //seco+
-        ndStatement = incomingData.secondStatement;
-
         //writing new analogy sentenc
         document.getElementById("enAnalogy").innerHTML = firstStatement + " " + parseInt(incomingData.energyAnalogyValue) + " " + secondStatement;
 
         //writing new cost sentence
-        document.getElementById("cost").innerHTML = "$" + parseInt(incomingData.moneySaved) + " of energy was produced in the last week";
+        document.getElementById("cost").innerHTML = "$" + parseInt(incomingData.moneySaved) + " of energy was produced last week";
      }
 
 
@@ -578,7 +580,7 @@ function weatherAPItest(url){
         document.getElementById("enAnalogy").innerHTML = firstStatement + " " + parseInt(incomingData.energyAnalogyValue) + " " + secondStatement;
 
         //writing new cost sentence
-        document.getElementById("cost").innerHTML = "$" + parseInt(incomingData.moneySaved) + " of energy was produced in the last month";
+        document.getElementById("cost").innerHTML = "$" + parseInt(incomingData.moneySaved) + " of energy was produced last month";
      }
 
 
@@ -603,7 +605,7 @@ function weatherAPItest(url){
         document.getElementById("enAnalogy").innerHTML = firstStatement + " " + parseInt(incomingData.energyAnalogyValue) + " " + secondStatement;
 
         //writing new cost sentence
-        document.getElementById("cost").innerHTML = "$" + parseInt(incomingData.moneySaved) + " of energy was produced in the last year";
+        document.getElementById("cost").innerHTML = "$" + parseInt(incomingData.moneySaved) + " of energy was produced last year";
      }
 
 </script>

@@ -14,8 +14,10 @@
     
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="main.css">
+    <!--
     <link rel="stylesheet" href="styles/sb-admin-2.css">
     <link rel="stylesheet" href="styles/timeline.css">
+  -->
     <link rel="stylesheet" href="bower_components/metisMenu/dist/metisMenu.min.css">
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css">
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" type="text/css">
@@ -23,10 +25,14 @@
     
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
+    <!--
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+  -->
+  <!--
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+  -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -58,7 +64,9 @@
     
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="app.js"></script>
+        <!--
         <script src="js/sb-admin-2.js"></script>
+      -->
     <!-- endbuild -->
 
 
@@ -168,12 +176,9 @@ img2{
 </font>
 
 <!--Buttons to change timeframe  CHANGE TO DROPDOWN MENU FOR FINAL ITERATION-->
-<button onclick="changer('https://api.myjson.com/bins/tm4ub')">change to week data</button>
+<button onclick="changer('https://api.myjson.com/bins/777jb')">change to week data</button>
 <button onclick="changer('https://api.myjson.com/bins/7no1v')">change to month data</button>
 <button onclick="changer('https://api.myjson.com/bins/pxobn')">change to year data</button>
-
-
-
 
 <p style=" color: white;">Timescale: </p>
 <p style=" color: white;" id="timescaleTest">showing timescale</p>
@@ -186,6 +191,7 @@ img2{
 //keeping track of testing values:
 var timescale;
 var weatherIdTest;
+//var urlInit = "";
 var urlBase = "http://urlBase.com/?timescale=";
 var firstStatement = "You could power ";
 var secondStatement = " lightbulbs for a day with the energy produced by these solar panels in a week";
@@ -329,24 +335,31 @@ function drawChart(timeChart){
 //drawing gauge and google chart on startup//
 /////////////////////////////////////////////
 window.onload = function(){
-   changer('https://api.myjson.com/bins/zr1rv');
-   weatherAPItest('http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial')
+
+  //changer(urlInit);
+  //grab('https://api.myjson.com/bins/ui45j');
+  grab('https://api.myjson.com/bins/12xed3');
+
+  weatherAPItest('http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial');
+
 };
 
 /////////////////////////////////////////////////////////////////
 //updating every 10 seconds (change later 10min)  ////////////////
 /////////////////////////////////////////////////////////////////
 function repeatUpdate() {
-    weatherAPItest('http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial')
+    weatherAPItest('http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial');
+
+    //changer(urlBase + timescale);
     if(timescale == "week")
-        changer('https://api.myjson.com/bins/tm4ub');
+        changer('https://api.myjson.com/bins/777jb');
     else if(timescale == "month")
         changer('https://api.myjson.com/bins/7no1v');
     else if(timescale == "year")
         changer('https://api.myjson.com/bins/pxobn');
 }
 
-var i = setInterval(function() { repeatUpdate(); }, 15000);
+var i = setInterval(function() { repeatUpdate(); }, 20000);
 
 ////////////////////////////////////////
 //chart data for week, month, and year//
@@ -420,6 +433,26 @@ var i = setInterval(function() { repeatUpdate(); }, 15000);
 //Changer function (stupid name, rename later)  //
 //use ajax to get data and decide timefrime      //
 ///////////////////////////////////////////////////
+
+    function grab(url){
+        var ourRequest = new XMLHttpRequest();
+        ourRequest.open('GET', url);
+        ourRequest.onload = function() {
+            var ourData = JSON.parse(ourRequest.responseText);
+            console.log(ourData);
+            renderHTMLgrab(ourData);
+        };
+        ourRequest.send();
+         function renderHTMLgrab(data) {
+            timescale = data.timescale;
+            if(timescale == "week")
+                changer('https://api.myjson.com/bins/tm4ub');
+            else if(timescale == "month")
+                 changer('https://api.myjson.com/bins/7no1v');
+            else if(timescale == "year")
+                changer('https://api.myjson.com/bins/pxobn');
+          }
+    }
 
     function changer(url){
         var ourRequest = new XMLHttpRequest();
@@ -511,7 +544,8 @@ function weatherAPItest(url){
 
         //updating analogy statements
         //firstStatement = incomingData.firstStatement;
-        //secondStatement = incomingData.secondStatement;
+        //seco+
+        ndStatement = incomingData.secondStatement;
 
         //writing new analogy sentenc
         document.getElementById("enAnalogy").innerHTML = "You could power " + incomingData.energyAnalogyValue + " lightbulbs for a day with the energy produced by these solar panels in a week";

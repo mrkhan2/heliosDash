@@ -176,7 +176,7 @@ img2{
 </font>
 
 <!--Buttons to change timeframe  CHANGE TO DROPDOWN MENU FOR FINAL ITERATION-->
-<button onclick="changer('https://api.myjson.com/bins/777jb')">change to week data</button>
+<button onclick="changer('https://api.myjson.com/bins/yishj')">change to week data</button>
 <button onclick="changer('https://api.myjson.com/bins/7no1v')">change to month data</button>
 <button onclick="changer('https://api.myjson.com/bins/pxobn')">change to year data</button>
 
@@ -352,7 +352,7 @@ function repeatUpdate() {
 
     //changer(urlBase + timescale);
     if(timescale == "week")
-        changer('https://api.myjson.com/bins/777jb');
+        changer('https://api.myjson.com/bins/yishj');
     else if(timescale == "month")
         changer('https://api.myjson.com/bins/7no1v');
     else if(timescale == "year")
@@ -445,6 +445,8 @@ var i = setInterval(function() { repeatUpdate(); }, 20000);
         ourRequest.send();
          function renderHTMLgrab(data) {
             timescale = data.timescale;
+            firstStatement = data.string1;
+            secondStatement = data.string2;
             if(timescale == "week")
                 changer('https://api.myjson.com/bins/tm4ub');
             else if(timescale == "month")
@@ -534,13 +536,13 @@ function weatherAPItest(url){
 
         //loading in new week data for chart
         for(i = 0; i < 7; i++)
-            weekChart[i+1][1] = incomingData.values[i];
+            weekChart[i+1][1] = parseInt(incomingData.values[i]);
 
         //creating new chart
         drawChart(weekChart);
 
         //drawing new gauge
-        drawGauge(incomingData.percentage);
+        drawGauge(parseInt(incomingData.percentage));
 
         //updating analogy statements
         //firstStatement = incomingData.firstStatement;
@@ -548,10 +550,10 @@ function weatherAPItest(url){
         ndStatement = incomingData.secondStatement;
 
         //writing new analogy sentenc
-        document.getElementById("enAnalogy").innerHTML = "You could power " + incomingData.energyAnalogyValue + " lightbulbs for a day with the energy produced by these solar panels in a week";
+        document.getElementById("enAnalogy").innerHTML = firstStatement + " " + parseInt(incomingData.energyAnalogyValue) + " " + secondStatement;
 
         //writing new cost sentence
-        document.getElementById("cost").innerHTML = "$" + incomingData.moneySaved + " of energy was produced in the last week";
+        document.getElementById("cost").innerHTML = "$" + parseInt(incomingData.moneySaved) + " of energy was produced in the last week";
      }
 
 
@@ -564,19 +566,19 @@ function weatherAPItest(url){
 
         //loading in new week data for chart
         for(i = 0; i < 31; i++)
-            monthChart[i+1][1] = incomingData.values[i];
+            monthChart[i+1][1] = parseInt(incomingData.values[i]);
 
         //creating new chart
         drawChart(monthChart);
 
         //drawing new gauge
-        drawGauge(incomingData.percentage);
+        drawGauge(parseInt(incomingData.percentage));
 
         //writing new analogy sentence
-        document.getElementById("enAnalogy").innerHTML = "You could power " + incomingData.energyAnalogyValue + " lightbulbs for a day with the energy produced by these solar panels in a month";
+        document.getElementById("enAnalogy").innerHTML = firstStatement + " " + parseInt(incomingData.energyAnalogyValue) + " " + secondStatement;
 
         //writing new cost sentence
-        document.getElementById("cost").innerHTML = "$" + incomingData.moneySaved + " of energy was produced in the last month";
+        document.getElementById("cost").innerHTML = "$" + parseInt(incomingData.moneySaved) + " of energy was produced in the last month";
      }
 
 
@@ -589,19 +591,19 @@ function weatherAPItest(url){
 
         //loading in new week data for chart
         for(i = 0; i < 12; i++)
-            yearChart[i+1][1] = incomingData.values[i];
+            yearChart[i+1][1] = parseInt(incomingData.values[i]);
 
         //creating new chart
         drawChart(yearChart);
 
         //drawing new gauge
-        drawGauge(incomingData.percentage);
+        drawGauge(parseInt(incomingData.percentage));
 
         //writing new analogy sentenc
-       document.getElementById("enAnalogy").innerHTML = "You could power " + incomingData.energyAnalogyValue + " lightbulbs for a day with the energy produced by these solar panels in a year";
+        document.getElementById("enAnalogy").innerHTML = firstStatement + " " + parseInt(incomingData.energyAnalogyValue) + " " + secondStatement;
 
         //writing new cost sentence
-        document.getElementById("cost").innerHTML = "$" + incomingData.moneySaved + " of energy was produced in the last year";
+        document.getElementById("cost").innerHTML = "$" + parseInt(incomingData.moneySaved) + " of energy was produced in the last year";
      }
 
 </script>

@@ -126,8 +126,9 @@ img2{
             <div class="panel-heading" id="demo">Energy Analogy</div>
             <div class="panel-body">
                  <div class = "fixedT">
-                  <center><img src="img/idea.png" >
-                  <h3 id="enAnalogy"> You could power 10 lightbulbs for a day with the energy produced by these solar panels </h3></center>
+                  <center><img id="analogyImage" src="img/idea.png" >
+                  <h3 id="enAnalogy"> You could power 10 lightbulbs for a day with the energy produced by these solar panels </h3>
+                  </center>
             </div>
             </div>
         </div>
@@ -177,14 +178,14 @@ img2{
 
 <!--Buttons to change timeframe  CHANGE TO DROPDOWN MENU FOR FINAL ITERATION-->
 <button onclick="changer('https://api.myjson.com/bins/yishj')">change to week data</button>
-<button onclick="changer('https://api.myjson.com/bins/7no1v')">change to month data</button>
+<button onclick="changer('https://api.myjson.com/bins/lknmf')">change to month data</button>
 <button onclick="changer('https://api.myjson.com/bins/pxobn')">change to year data</button>
 
 <!--
     TO ACTUALLY CONNECT TO BACKEND, DELETE ABOVE BUTTONS AND UNCOMMENT THESE!!!
 <button onclick="changer(urlBase + "week")">change to week data</button>
-<button onclick="changer(urlBase + "week")">change to month data</button>
-<button onclick="changer(urlBase + "week")">change to year data</button>
+<button onclick="changer(urlBase + "month")">change to month data</button>
+<button onclick="changer(urlBase + "year")">change to year data</button>
 -->
 
 <p style=" color: white;">Timescale: </p>
@@ -194,9 +195,10 @@ img2{
 
 
 <script>
-//TO ACTUALLY CONNECT TO BACKEND, UNCOMMENT VAR URLINIT AND FILL IN THE URL
-//var urlInit = "";
+//TO ACTUALLY CONNECT TO BACKEND, CHANGE URLINIT TO CORRECT URL
+var urlInit = "https://api.myjson.com/bins/njdx3";
 var urlBase = "http://urlBase.com/?timescale=";
+var urlWeather = 'http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial';
 
 //keeps track of what timescale the dashboard is displaying
 var timescale;
@@ -344,8 +346,8 @@ function drawChart(timeChart){
 //draw all the panels                          //
 /////////////////////////////////////////////////
 window.onload = function(){
-  initChanger('https://api.myjson.com/bins/12xed3');
-  weatherAPItest('http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial');
+  initChanger(urlInit);
+  drawWeatherPanel(urlWeather);
 };
 
 ////////////////////////////////////////////////////
@@ -354,89 +356,157 @@ window.onload = function(){
 var i = setInterval(function() { repeatUpdate(); }, 30000);
 
 function repeatUpdate() {
-    weatherAPItest('http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial');
+    drawWeatherPanel('http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial');
     //UNCOMMENT CODE BELOW HERE AND DELETE IF ELSE STATEMENT BELOW TO CONNECT WITH BACKEND!!!
     //changer(urlBase + timescale);
     if(timescale == "week")
         changer('https://api.myjson.com/bins/yishj');
     else if(timescale == "month")
-        changer('https://api.myjson.com/bins/7no1v');
+        changer('https://api.myjson.com/bins/lknmf');
     else if(timescale == "year")
         changer('https://api.myjson.com/bins/pxobn');
 }
 
-
-////////////////////////////////////////
-//chart data for week, month, and year//
-////////////////////////////////////////
+////////////////////////////////////////////////////
+//chart data for week, month (3 lengths), and year//
+////////////////////////////////////////////////////
 
     var weekChart = [
          ['', 'Value'],
-         ['Sunday', 8.94],         
-         ['Monday', 10.49],           
-         ['Tuesday', 19.30],
-         ['Wednesday', 19.30],
-         ['Thursday', 19.30],
-         ['Friday', 19.30],
-         ['Saturday', 29.30],
+         ['Sunday', 0],         
+         ['Monday', 0],           
+         ['Tuesday', 0],
+         ['Wednesday', 0],
+         ['Thursday', 0],
+         ['Friday', 0],
+         ['Saturday', 0],
       ];
 
-      var monthChart =[
+      var monthChart28 =[
          ['', 'Value'],
-         ['1', 8.94],         
-         ['2', 10.49],           
-         ['3', 19.30],
-         ['4', 19.30],
-         ['5', 19.30],
-         ['6', 19.30],
-         ['7', 29.30],
-         ['8', 9.30],
-         ['9', 19.30],
-         ['10', 19.30],
-         ['11', 8.94],         
-         ['12', 10.49],           
-         ['13', 19.30],
-         ['14', 19.30],
-         ['15', 19.30],
-         ['16', 19.30],
-         ['17', 29.30],
-         ['18', 9.30],
-         ['19', 19.30],
-         ['20', 19.30],
-         ['21', 8.94],         
-         ['22', 10.49],           
-         ['23', 19.30],
-         ['24', 19.30],
-         ['25', 19.30],
-         ['26', 19.30],
-         ['27', 29.30],
-         ['28', 9.30],
-         ['29', 19.30],
-         ['30', 19.30],
-         ['31', 55],
+         ['1', 0],         
+         ['2', 0],           
+         ['3', 0],
+         ['4', 0],
+         ['5', 0],
+         ['6', 0],
+         ['7', 0],
+         ['8', 0],
+         ['9', 0],
+         ['10', 0],
+         ['11', 0],         
+         ['12', 0],           
+         ['13', 0],
+         ['14', 0],
+         ['15', 0],
+         ['16', 0],
+         ['17', 0],
+         ['18', 0],
+         ['19', 0],
+         ['20', 0],
+         ['21', 0],         
+         ['22', 0],           
+         ['23', 0],
+         ['24', 0],
+         ['25', 0],
+         ['26', 0],
+         ['27', 0],
+         ['28', 0],
+        ];
+
+      var monthChart30 =[
+         ['', 'Value'],
+         ['1', 0],         
+         ['2', 0],           
+         ['3', 0],
+         ['4', 0],
+         ['5', 0],
+         ['6', 0],
+         ['7', 0],
+         ['8', 0],
+         ['9', 0],
+         ['10', 0],
+         ['11', 0],         
+         ['12', 0],           
+         ['13', 0],
+         ['14', 0],
+         ['15', 0],
+         ['16', 0],
+         ['17', 0],
+         ['18', 0],
+         ['19', 0],
+         ['20', 0],
+         ['21', 0],         
+         ['22', 0],           
+         ['23', 0],
+         ['24', 0],
+         ['25', 0],
+         ['26', 0],
+         ['27', 0],
+         ['28', 0],
+         ['29', 0],
+         ['30', 0],
+        ];
+
+      var monthChart31 =[
+         ['', 'Value'],
+         ['1', 0],         
+         ['2', 0],           
+         ['3', 0],
+         ['4', 0],
+         ['5', 0],
+         ['6', 0],
+         ['7', 0],
+         ['8', 0],
+         ['9', 0],
+         ['10', 0],
+         ['11', 0],         
+         ['12', 0],           
+         ['13', 0],
+         ['14', 0],
+         ['15', 0],
+         ['16', 0],
+         ['17', 0],
+         ['18', 0],
+         ['19', 0],
+         ['20', 0],
+         ['21', 0],         
+         ['22', 0],           
+         ['23', 0],
+         ['24', 0],
+         ['25', 0],
+         ['26', 0],
+         ['27', 0],
+         ['28', 0],
+         ['29', 0],
+         ['30', 0],
+         ['31', 0],
         ];
 
       var yearChart =[
          ['', 'Value'],
-         ['Jan', 8.94],         
-         ['Feb', 10.49],           
-         ['Mar', 19.30],
-         ['Apr', 19.30],
-         ['May', 19.30],
-         ['Jun', 19.30],
-         ['Jul', 29.30],
-         ['Aug', 9.30],
-         ['Sep', 19.30],
-         ['Oct', 19.30],
-         ['Nov', 29.30],
-         ['Dec', 9.30],
+         ['Jan', 0],         
+         ['Feb', 0],           
+         ['Mar', 0],
+         ['Apr', 0],
+         ['May', 0],
+         ['Jun', 0],
+         ['Jul', 0],
+         ['Aug', 0],
+         ['Sep', 0],
+         ['Oct', 0],
+         ['Nov', 0],
+         ['Dec', 0],
         ];
 
 
 
 ///////////////////////////////////////////////////
-//Changer function (stupid name, rename later)  //
-//use ajax to get data and decide timefrime      //
+//initChanger(url):                              //
+//  Reads data from the initialization url and   //
+//stores that data.  Decides which timescale to  //
+//use for drawing panels, calls changer() to     //
+//draw them.                                     //
 ///////////////////////////////////////////////////
 
     function initChanger(url){
@@ -448,20 +518,28 @@ function repeatUpdate() {
             renderHTML(ourData);
         };
         ourRequest.send();
-         function renderHTML(data) {
+
+        function renderHTML(data) {
             timescale = data.timescale;
             firstStatement = data.string1;
             secondStatement = data.string2;
+            document.getElementById('analogyImage').src= data.imageURL;
+            console.log(data.imageURL);
 //TO ACTUALLY WORK WITH BACK END, UNCOMMENT SINGLE LINE AND DELETE IF/ELSE STATEMENT
 //          changer(urlBase + timescale);
             if(timescale == "week")
                 changer('https://api.myjson.com/bins/tm4ub');
             else if(timescale == "month")
-                 changer('https://api.myjson.com/bins/7no1v');
+                 changer('https://api.myjson.com/bins/lknmf');
             else if(timescale == "year")
                 changer('https://api.myjson.com/bins/pxobn');
           }
     }
+
+///////////////////////////////////////////////////////////////////
+//Reads data from the url, clears old gauge and chart, draws new //
+//gauge and chart, and updates analogy and money saved           //
+///////////////////////////////////////////////////////////////////
 
     function changer(url){
         var ourRequest = new XMLHttpRequest();
@@ -472,30 +550,60 @@ function repeatUpdate() {
             renderHTML(ourData);
         };
         ourRequest.send();
+
         function renderHTML(data) {
-            if(data.values.length == 7){
-                timescale = "week";
-                document.getElementById("timescaleTest").innerHTML = timescale;
-                document.getElementById("queryTest").innerHTML = urlBase + timescale;
-                drawWeekPanels(data);
+            var chartlength = data.values.length;
+            var chart;
+            switch(chartlength){
+                case 7:
+                    timescale = "week";
+                    chart = weekChart;
+                    break;
+                case 12:
+                    timescale = "year";
+                    chart = yearChart;
+                    break;
+                case 28:
+                    timescale = "month";
+                    chart = monthChart28;
+                    break;
+                case 30:
+                    timescale = "month";
+                    chart = monthChart30;
+                    break;
+                case 31:
+                    timescale = "month";
+                    chart = monthChart31;
+                    break;
             }
-            else if (data.values.length == 12){
-                timescale = "year";
-                document.getElementById("timescaleTest").innerHTML = timescale;
-                document.getElementById("queryTest").innerHTML = urlBase + timescale;
-                drawYearPanels(data);
-            }
-            else if (data.values.length == 31){
-                timescale = "month";
-                document.getElementById("timescaleTest").innerHTML = timescale;
-                document.getElementById("queryTest").innerHTML = urlBase + timescale;
-                drawMonthPanels(data);
-            }
+            //updating doc values for testing, DELETE THESE 2 LINES FOR FINAL CODE
+            document.getElementById("timescaleTest").innerHTML = timescale;
+            document.getElementById("queryTest").innerHTML = urlBase + timescale;
+
+            //clearing guage and chart panels before writing new data
+            $('#gauge').empty();
+            $('#chart_div').empty();
+
+            //loading in new week data for chart
+            for(i = 0; i < chartlength; i++)
+                chart[i+1][1] = parseInt(data.values[i]);
+
+            //creating new chart
+            drawChart(chart);
+
+            //drawing new gauge
+            drawGauge(parseInt(data.percentage));
+
+            //writing new analogy sentenc
+            document.getElementById("enAnalogy").innerHTML = firstStatement + " " + parseInt(data.energyAnalogyValue) + " " + secondStatement;
+
+            //writing new cost sentence
+           document.getElementById("cost").innerHTML = "$" + parseInt(data.moneySaved) + " of energy was produced last " + timescale;
         }
      }
 
-
-function weatherAPItest(url){
+//draws/redraws weather panel
+function drawWeatherPanel(url){
         var ourRequest = new XMLHttpRequest();
         ourRequest.open('GET', url);
         ourRequest.onload = function() {
@@ -504,110 +612,31 @@ function weatherAPItest(url){
             renderHTML(ourData);
         };
         ourRequest.send();
+
         function renderHTML(data) {
-        var weatherId = data.weather[0].id;
-        var seconds = new Date() / 1000;
-        if(weatherId < 300)
-          weatherImage = "img/thunderstorm.png";
-        else if(weatherId < 600)
-          weatherImage = "img/raining.png";
-        else if(weatherId < 700)
-          weatherImage = "img/snowing.png";
-        else if(weatherId == 800){
-              if((seconds < data.sys.sunrise) || (seconds > data.sys.sunset))
-                  weatherImage = "img/moon.png";
-              else
-                weatherImage = "img/sunny.png";
+            var weatherId = data.weather[0].id;
+            var seconds = new Date() / 1000;
+            if(weatherId < 300)
+              weatherImage = "img/thunderstorm.png";
+            else if(weatherId < 600)
+              weatherImage = "img/raining.png";
+            else if(weatherId < 700)
+              weatherImage = "img/snowing.png";
+            else if(weatherId == 800){
+                  if((seconds < data.sys.sunrise) || (seconds > data.sys.sunset))
+                      weatherImage = "img/moon.png";
+                  else
+                    weatherImage = "img/sunny.png";
+            }
+            else if(weatherId < 803)
+              weatherImage = "img/partlyCloudy.png";
+            else
+              weatherImage = "img/cloudy.png";
+
+            $("#weatherPic").html(" <img src=" + weatherImage + ' style="height:23vh"> ');
+            $("#weatherTemp").html(Math.round(data.main.temp) + " &#176;&nbsp;");
         }
-        else if(weatherId < 803)
-          weatherImage = "img/partlyCloudy.png";
-        else
-          weatherImage = "img/cloudy.png";
-
-        $("#weatherPic").html(" <img src=" + weatherImage + ' style="height:23vh"> ');
-        $("#weatherTemp").html(Math.round(data.main.temp) + " &#176;&nbsp;");
-        }
-
      }
-//////////////////////////////////////////
-//Drawing Functions for the 3 timeframes//
-//Must clear chart and gauge each time  //
-//COMBINE INTO ONE FUNCTION LATER       //
-//////////////////////////////////////////
-
-    //updating page if timeframe is a week
-    function drawWeekPanels(incomingData){
-        //clearing guage and chart panels before writing new data
-        $('#gauge').empty();
-        $('#chart_div').empty();
-
-        //loading in new week data for chart
-        for(i = 0; i < 7; i++)
-            weekChart[i+1][1] = parseInt(incomingData.values[i]);
-
-        //creating new chart
-        drawChart(weekChart);
-
-        //drawing new gauge
-        drawGauge(parseInt(incomingData.percentage));
-
-        //writing new analogy sentenc
-        document.getElementById("enAnalogy").innerHTML = firstStatement + " " + parseInt(incomingData.energyAnalogyValue) + " " + secondStatement;
-
-        //writing new cost sentence
-        document.getElementById("cost").innerHTML = "$" + parseInt(incomingData.moneySaved) + " of energy was produced last week";
-     }
-
-
-
-    //updating page if timeframe is a month
-    function drawMonthPanels(incomingData){
-        //clearing guage and chart panels before writing new data
-        $('#gauge').empty();
-        $('#chart_div').empty();
-
-        //loading in new week data for chart
-        for(i = 0; i < 31; i++)
-            monthChart[i+1][1] = parseInt(incomingData.values[i]);
-
-        //creating new chart
-        drawChart(monthChart);
-
-        //drawing new gauge
-        drawGauge(parseInt(incomingData.percentage));
-
-        //writing new analogy sentence
-        document.getElementById("enAnalogy").innerHTML = firstStatement + " " + parseInt(incomingData.energyAnalogyValue) + " " + secondStatement;
-
-        //writing new cost sentence
-        document.getElementById("cost").innerHTML = "$" + parseInt(incomingData.moneySaved) + " of energy was produced last month";
-     }
-
-
-
-    //updating page if timeframe is a year
-    function drawYearPanels(incomingData){
-        //clearing guage and chart panels before writing new data
-        $('#gauge').empty();
-        $('#chart_div').empty();
-
-        //loading in new week data for chart
-        for(i = 0; i < 12; i++)
-            yearChart[i+1][1] = parseInt(incomingData.values[i]);
-
-        //creating new chart
-        drawChart(yearChart);
-
-        //drawing new gauge
-        drawGauge(parseInt(incomingData.percentage));
-
-        //writing new analogy sentenc
-        document.getElementById("enAnalogy").innerHTML = firstStatement + " " + parseInt(incomingData.energyAnalogyValue) + " " + secondStatement;
-
-        //writing new cost sentence
-        document.getElementById("cost").innerHTML = "$" + parseInt(incomingData.moneySaved) + " of energy was produced last year";
-     }
-
 </script>
 </body>
 </html>

@@ -183,10 +183,6 @@ img2{
 <button onclick="changer(urlBase + "month")">change to month data</button>
 <button onclick="changer(urlBase + "year")">change to year data</button>
 
-<p style=" color: white;">Timescale: </p>
-<p style=" color: white;" id="timescaleTest">showing timescale</p>
-<p style=" color: white;">Query URL:</p>
-<p style=" color: white;" id="queryTest">showing query url</p>
 
 
 <script>
@@ -324,13 +320,22 @@ $(window).on('resizeEnd', function() {
 
 function drawChart(timeChart){
     var data = new google.visualization.arrayToDataTable(timeChart);
-
-      var options = {
+ var options = {
         legend: { position: "none" },
-        hAxis : {textColor: '#ffffff'},
-        colors:['#11B29C'],
-        vAxis: {title: 'kW/h'}
+        hAxis : {textColor: '#ffffff '},
+        bars: 'vertical',
+                colors:['#11B29C'],
+
+        series: {
+            0: { axis: 'kWh' }, // Bind series 0 to an axis named 'distance'.
+          },
+        axes: {
+            y: {
+              kWh: {label: 'kWh'}, // Bottom x-axis.
+            }
+          }
        };
+    
 
       var chart = new google.charts.Bar(
         document.getElementById('chart_div'));
@@ -569,9 +574,7 @@ function repeatUpdate() {
                     chart = monthChart31;
                     break;
             }
-            //updating doc values for testing, DELETE THESE 2 LINES FOR FINAL CODE
-            document.getElementById("timescaleTest").innerHTML = timescale;
-            document.getElementById("queryTest").innerHTML = urlBase + timescale;
+        
 
             //clearing guage and chart panels before writing new data
             $('#gauge').empty();
@@ -591,7 +594,7 @@ function repeatUpdate() {
             document.getElementById("enAnalogy").innerHTML = firstStatement + " " + parseInt(data.energyAnalogyValue) + " " + secondStatement;
 
             //writing new cost sentence
-           document.getElementById("cost").innerHTML = "$" + parseInt(data.moneySaved) + " of energy was produced last " + timescale;
+           document.getElementById("cost").innerHTML = "$" + parseInt(data.moneySaved) + " saved last " + timescale;
         }
      }
 

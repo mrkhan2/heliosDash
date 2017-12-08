@@ -5,7 +5,7 @@
  */
 
 body {
-    background-color: #00ceb3;
+    background-color: #53DAC7;
 }
 
 img {
@@ -31,7 +31,16 @@ img {
         border-left: 1px solid #e7e7e7;
     }
 }
+.fonts{
+    font-family: 'Roboto', sans-serif;
 
+
+}
+.top{
+
+    font-family: 'Roboto', sans-serif;
+
+}
 .navbar-top-links {
     margin-right: 0;
 }
@@ -236,8 +245,12 @@ padding: 10000px;
 .panel .slidedown .glyphicon,
 .chat .glyphicon {
     margin-right: 5px;
-}
 
+}
+.panel{
+
+    box-shadow: 5px 5px 10px #888888;
+}
 .chat-panel .panel-body {
     height: 350px;
     overflow-y: scroll;
@@ -357,13 +370,14 @@ table.dataTable thead .sorting:after {
 .panel-red .panel-heading {
     border-color: #d9534f;
     color: #fff;
-    background-color: #d9534f;
 }
 
 .panel-heading{
 
-
-
+background-color: #11B29C;
+font-family: 'Roboto', sans-serif;
+font-size: 2.5vh;
+color: #fff;
 }
 
 .panel-red a {
@@ -381,7 +395,6 @@ table.dataTable thead .sorting:after {
 .panel-yellow .panel-heading {
     border-color: #f0ad4e;
     color: #fff;
-    background-color: #f0ad4e;
 }
 
 .panel-yellow a {

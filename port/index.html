@@ -104,7 +104,6 @@ img2{
 
     </head>
    
-<body background="img/nature.jpg" >
 
 <font face="Georgia"> <div class = "outside">
 <div class="row">
@@ -176,17 +175,10 @@ img2{
   </div>
 </font>
 
-<!--Buttons to change timeframe  CHANGE TO DROPDOWN MENU FOR FINAL ITERATION-->
-<button onclick="changer('https://api.myjson.com/bins/yishj')">change to week data</button>
-<button onclick="changer('https://api.myjson.com/bins/lknmf')">change to month data</button>
-<button onclick="changer('https://api.myjson.com/bins/pxobn')">change to year data</button>
 
-<!--
-    TO ACTUALLY CONNECT TO BACKEND, DELETE ABOVE BUTTONS AND UNCOMMENT THESE!!!
 <button onclick="changer(urlBase + "week")">change to week data</button>
 <button onclick="changer(urlBase + "month")">change to month data</button>
 <button onclick="changer(urlBase + "year")">change to year data</button>
--->
 
 <p style=" color: white;">Timescale: </p>
 <p style=" color: white;" id="timescaleTest">showing timescale</p>
@@ -196,8 +188,8 @@ img2{
 
 <script>
 //TO ACTUALLY CONNECT TO BACKEND, CHANGE URLINIT TO CORRECT URL
-var urlInit = "https://api.myjson.com/bins/njdx3";
-var urlBase = "http://urlBase.com/?timescale=";
+var urlInit = "http://127.0.0.1:8000/initialize";
+var urlBase = "http://127.0.0.1:8000/energyapi?timescale=";
 var urlWeather = 'http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial';
 
 //keeps track of what timescale the dashboard is displaying
@@ -357,14 +349,8 @@ var i = setInterval(function() { repeatUpdate(); }, 30000);
 
 function repeatUpdate() {
     drawWeatherPanel('http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial');
-    //UNCOMMENT CODE BELOW HERE AND DELETE IF ELSE STATEMENT BELOW TO CONNECT WITH BACKEND!!!
-    //changer(urlBase + timescale);
-    if(timescale == "week")
-        changer('https://api.myjson.com/bins/yishj');
-    else if(timescale == "month")
-        changer('https://api.myjson.com/bins/lknmf');
-    else if(timescale == "year")
-        changer('https://api.myjson.com/bins/pxobn');
+    changer(urlBase + timescale);
+
 }
 
 ////////////////////////////////////////////////////
@@ -525,14 +511,8 @@ function repeatUpdate() {
             secondStatement = data.string2;
             document.getElementById('analogyImage').src= data.imageURL;
             console.log(data.imageURL);
-//TO ACTUALLY WORK WITH BACK END, UNCOMMENT SINGLE LINE AND DELETE IF/ELSE STATEMENT
-//          changer(urlBase + timescale);
-            if(timescale == "week")
-                changer('https://api.myjson.com/bins/tm4ub');
-            else if(timescale == "month")
-                 changer('https://api.myjson.com/bins/lknmf');
-            else if(timescale == "year")
-                changer('https://api.myjson.com/bins/pxobn');
+            changer(urlBase + timescale);
+          
           }
     }
 

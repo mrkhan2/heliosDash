@@ -64,6 +64,7 @@
         h3 {
             font-size: 2.5vh;
             font-family: 'Open Sans', sans-serif;
+            margin-top: 5px;
         }
         
         img {
@@ -173,18 +174,23 @@
         }
         
         .container2 {
+            flex-flow: column wrap;
+            display: flex;
             width: 100%;
             height: 100%;
             text-align: center;
         }
         
         .top-div {
-            height: 75%;
+            height: 78%;
             width: 100%;
+            font-size: 0;
+            padding: 0;
         }
         
         .bot-div {
-            height: 25%;
+            padding: 0;
+            height: 22%;
             width: 100%;
         }
     </style>
@@ -257,7 +263,7 @@
                                     <img id="analogyImage" src="img/idea.png">
                                 </div>
                                 <div class="bot-div">
-                                    <h3 id="enAnalogy"> You could power 10 lightbulbs for a day with the energy produced by these solar panels
+                                    <h3> You could power 10 lightbulbs for a day with the energy produced by these solar panels
                                     </h3>
                                 </div>
                             </div>
@@ -310,8 +316,8 @@
                     </div>
                     <div class="panel-body">
                         <div id="weatherPanel" class="fixed">
-                            <div class="fonts"> <b>Madison</b> </div>
-                            <hr color="black" style="height:.7vh; margin-top: 1vh;">
+                            <div class="fonts" style=padding-top:.2vh;> <b style="font-size: 2vh;">Madison</b> </div>
+                            <hr color="black" style="height:.4vh; margin-top: .5vh;">
                             <center>
                                 <div class="weather">
                                     <p id="weatherTemp" style="font-size: 8vh;"> </p>

@@ -1,6 +1,7 @@
- <!doctype html>
+<!doctype html>
 <html class="no-js">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
@@ -11,7 +12,7 @@
     <link rel="stylesheet" href="bootstrap.css" />
     <!-- endbower -->
     <!-- endbuild -->
-    
+
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -20,15 +21,15 @@
     <link rel="stylesheet" href="styles/sb-admin-2.css">
     <link rel="stylesheet" href="styles/timeline.css">
   -->
-   
+
     <!-- endbuild -->
-    
+
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <!--
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
   -->
-  <!--
+    <!--
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
@@ -39,19 +40,19 @@
 
     <!-- gauge -->
 
-  <script src="http://code.highcharts.com/highcharts.js"></script>
-  <script src="http://code.highcharts.com/highcharts-more.js"></script>
-  <script src="http://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 
 
 
     <!-- endbower -->
     <!-- endbuild -->
-    
+
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="app.js"></script>
-        <!--
+    <script src="app.js"></script>
+    <!--
         <script src="js/sb-admin-2.js"></script>
       -->
     <!-- endbuild -->
@@ -59,171 +60,254 @@
 
 
     <!-- Custom CSS -->
-        <style>
-h3 {
-  font-size: 2.5vh;
-font-family: 'Open Sans', sans-serif;
-
-  
-}
-img{
-  height: 15vh;
-}
-
- h1{
-     color: white;
-     float: left;
- }
-  .dropbutton {
-     border-radius: 3px;
-     margin-bottom: 16px;
-     margin-top: 16px;
-     background-color: #11B29C;
-     color: white;
-     padding-left: 32px;
-     padding-right: 32px;
-     padding-top: 16px;
-     padding-bottom: 16px;
-     font-size: 18px;
-     border: none;
-     cursor: pointer;
- }
-
-.dropdown {
-     position: relative;
-     display: inline-block
-     
- }
-
- .dropdown-content {
-     border-radius: 3px;
-     display: none;
-     margin-top:-14px;
-     right: 0;
-     position: absolute;
-     background-color: #f9f9f9;
-     min-width: 160px;
-     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-     z-index: 1;
- }
-
- .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
- .dropdown-content a:hover {
-     background-color: #16f9da
-     }
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown:hover .dropbuttonn {
-    background-color: #3e8e41;
-}
-
-
-</style>
+    <style>
+        h3 {
+            font-size: 2.5vh;
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        img {
+            height: 15vh;
+        }
+        
+        h1 {
+            color: white;
+        }
+        
+        .dropbutton {
+            box-shadow: 5px 5px 10px #888888;
+            border-radius: 3px;
+            margin-bottom: 16px;
+            margin-top: 16px;
+            background-color: #11B29C;
+            color: white;
+            padding-left: 32px;
+            padding-right: 32px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block
+        }
+        
+        .dropdown-content {
+            box-shadow: 5px 5px 10px #888888;
+            border-radius: 3px;
+            display: none;
+            margin-top: -14px;
+            right: 0;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #16f9da
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown:hover .dropbuttonn {
+            background-color: #3e8e41;
+        }
+        
+        .container {
+            
+            flex-flow: row wrap;
+            display: flex;
+            width: 100%;
+        }
+        
+        .left-div,
+        .right-div {
+            
+            display: flex;
+            width: 20%;
+        }
+        
+        .right-div {
+            justify-content: flex-end;
+        }
+        
+        .center-div {
+            display: flex;
+            width: 60%;
+            justify-content: center;
+        }
+        
+        @media all and (max-width: 600px) {
+            .container {
+                flex-flow: column wrap;
+                width:100%;
+                text-align: center;
+                padding: 0;
+            }
+            .left-div,
+            .right-div {
+                display: flex;
+                width:100%;
+                
+               
+            }
+            .right-div {
+                justify-content: center;
+                
+            }
+            .center-div {
+                display: flex;
+                width:100%;
+                justify-content: center;
+            }
+        }
+    </style>
 
     <!-- Custom Fonts -->
 
     <!-- Morris Charts CSS -->
     <!-- <link href="styles/morrisjs/morris.css" rel="stylesheet"> -->
 
-      <!--Load the AJAX API-->
+    <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 
 
 
-    </head>
-   
+</head>
 
-<div class = "outside">
-<div class="row">
-    <div class="col-lg-12">
-        <h1 id="title" class="top"><center><font color="#ffffff">Solar Energy Dashboard</font></center></h1>
-         <div class="dropdown" style="float:right;">
-  <button class="dropbutton">Timescale <span class="caret"></span></button>
-  <div class="dropdown-content">
-    <a onclick="changer(urlBase + "week")">Week</a>
-    <a onclick="changer(urlBase + "month")">Month</a>
-    <a onclick="changer(urlBase + "year")">Year</a>
-  </div>
-</div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-4 col-sm-12" id="line-chart" ng-controller="ChartCtrl">
-        <div class="panel panel-default">
-            <div class="panel-heading"><center><font color="#ffffff">Building Solar Energy %</font></center></div>
-            <div class="panel-body">
-               <div   id="gauge" style="min-width: 310px; max-width: 4000px; height: 27vh; margin: 0 auto"></div>
+
+<div class="outside">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="container">
+                <div class="left-div"></div>
+                
+                    <div class="center-div">
+                        <h1 id="title" class="top">
+
+                            <font color="#ffffff">Solar Energy Dashboard</font>
+
+                        </h1>
+                    </div>
+                
+                <div class="right-div">
+                    <div class="dropdown" style="float:right;">
+                        <button class="dropbutton">Timescale <span class="caret"></span></button>
+                        <div class="dropdown-content">
+                            <a onclick="changer(urlBase + " week ")">Week</a>
+                            <a onclick="changer(urlBase + " month ")">Month</a>
+                            <a onclick="changer(urlBase + " year ")">Year</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-4 col-sm-12" id="bar-chart" ng-controller="ChartCtrl">
-        <div class="panel panel-default">
-            <div class="panel-heading" id="demo"><center><font color="#ffffff">Energy Analogy</font></center></div>
-            <div class="panel-body">
-                 <div class = "fixedT">
-                  <center><img id="analogyImage" src="img/idea.png" >
-                  <h3 id="enAnalogy"> You could power 10 lightbulbs for a day with the energy produced by these solar panels </h3>
-                  </center>
-            </div>
+    <div class="row">
+        <div class="col-lg-4 col-sm-12" id="line-chart" ng-controller="ChartCtrl">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <center>
+                        <font color="#ffffff">Building Solar Energy %</font>
+                    </center>
+                </div>
+                <div class="panel-body">
+                    <div id="gauge" style="min-width: 310px; max-width: 4000px; height: 27vh; margin: 0 auto"></div>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="col-lg-4 col-sm-12" id="bar-chart" ng-controller="ChartCtrl">
+            <div class="panel panel-default">
+                <div class="panel-heading" id="demo">
+                    <center>
+                        <font color="#ffffff">Energy Analogy</font>
+                    </center>
+                </div>
+                <div class="panel-body">
+                    <div class="fixedT">
+                        <center><img id="analogyImage" src="img/idea.png">
+                            <h3 id="enAnalogy"> You could power 10 lightbulbs for a day with the energy produced by these solar panels </h3>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-lg-4 col-sm-12" id="doughnut-chart" ng-controller="ChartCtrl">
-        <div class="panel panel-default">
-            <div class="panel-heading"><center><font color="#ffffff">Dollars Saved</font></center></div>
-            <div class="panel-body">
-            <div class = "fixedT">
-               <center><img src="img/banknote.png" >
-                <h3 id="cost"> $10,000 of energy was produced last month </h3></center>
-            </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-8 col-sm-12" id="radar-chart" ng-controller="ChartCtrl">
-        <div class="panel panel-default" >
-            <div class="panel-heading"><center><font color="#ffffff">Energy Chart</font></center></div>
-            <div class="panel-body" style = "height: 100%;">
-                <div id="chart_div" style = "height: 33vh;"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-sm-12" id="pie-chart" ng-controller="ChartCtrl">
-        <div class="panel panel-default">
-          <div class="panel-heading"><center><font color="#ffffff">Weather</font></center></div>
-          <div class="panel-body">
-             <div id="weatherPanel" class = "fixed">      
-               <div class="fonts"> <b>Madison</b> </div>
-                <hr color="black" style="height:.7vh; margin-top: 1vh;">
-                <center>
-                <div class="weather">
-                    <p id="weatherTemp" style="font-size: 8vh;" >   </p>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <center>
+                        <font color="#ffffff">Dollars Saved</font>
+                    </center>
                 </div>
-                <div id="weatherPic" class ="weather">
+                <div class="panel-body">
+                    <div class="fixedT">
+                        <center><img src="img/banknote.png">
+                            <h3 id="cost"> $10,000 of energy was produced last month </h3>
+                        </center>
+                    </div>
                 </div>
-                </center>
             </div>
-          </div>
         </div>
     </div>
-    <div class="component__weather-box"></div>
-  </div>
-  <img src="admin/HeliosLogo.png" style="float: right;width:15%;height:15%">
-</font>
+    <div class="row">
+        <div class="col-lg-8 col-sm-12" id="radar-chart" ng-controller="ChartCtrl">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <center>
+                        <font color="#ffffff">Energy Chart</font>
+                    </center>
+                </div>
+                <div class="panel-body" style="height: 100%;">
+                    <div id="chart_div" style="height: 33vh;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12" id="pie-chart" ng-controller="ChartCtrl">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <center>
+                        <font color="#ffffff">Weather</font>
+                    </center>
+                </div>
+                <div class="panel-body">
+                    <div id="weatherPanel" class="fixed">
+                        <div class="fonts"> <b>Madison</b> </div>
+                        <hr color="black" style="height:.7vh; margin-top: 1vh;">
+                        <center>
+                            <div class="weather">
+                                <p id="weatherTemp" style="font-size: 8vh;"> </p>
+                            </div>
+                            <div id="weatherPic" class="weather">
+                            </div>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="component__weather-box"></div>
+    </div>
+    <a href="https://win.wisc.edu/organization/helios">
+    <img src="admin/HeliosLogo.png" alt="GO WISCONSIN!" style="float: right;width:15%;height:15%">
+    </a>
+    </font>
 
 
-<script>
+    <script>
 //TO ACTUALLY CONNECT TO BACKEND, CHANGE URLINIT TO CORRECT URL and go to line 534
 var urlInit = "https://api.myjson.com/bins/njdx3";
 var urlBase = "http://127.0.0.1:8000/energyapi?timescale=";
@@ -673,5 +757,6 @@ function drawWeatherPanel(url){
         }
      }
 </script>
-</body>
+    </body>
+
 </html>

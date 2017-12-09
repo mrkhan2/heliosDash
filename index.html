@@ -75,7 +75,60 @@ img2{
 }
  h1{
      color: white;
+     float: left;
  }
+  .dropbutton {
+     border-radius: 3px;
+     margin-bottom: 16px;
+     margin-top: 16px;
+     background-color: #11B29C;
+     color: white;
+     padding-left: 32px;
+     padding-right: 32px;
+     padding-top: 16px;
+     padding-bottom: 16px;
+     font-size: 18px;
+     border: none;
+     cursor: pointer;
+ }
+
+.dropdown {
+     position: relative;
+     display: inline-block
+     
+ }
+
+ .dropdown-content {
+     border-radius: 3px;
+     display: none;
+     margin-top:-14px;
+     right: 0;
+     position: absolute;
+     background-color: #f9f9f9;
+     min-width: 160px;
+     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+     z-index: 1;
+ }
+
+ .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+ .dropdown-content a:hover {
+     background-color: #f1f1f1
+     }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbuttonn {
+    background-color: #3e8e41;
+}
+
 
 </style>
 
@@ -93,10 +146,18 @@ img2{
     </head>
    
 
-<font face="Georgia"> <div class = "outside">
+<div class = "outside">
 <div class="row">
     <div class="col-lg-12">
         <h1 id="title" class="top"><center><font color="#ffffff">Solar Energy Dashboard</font></center></h1>
+         <div class="dropdown" style="float:right;">
+  <button class="dropbutton">Timescale <span class="caret"></span></button>
+  <div class="dropdown-content">
+    <a onclick="changer(urlBase + "week")">Week</a>
+    <a onclick="changer(urlBase + "month")">Month</a>
+    <a onclick="changer(urlBase + "year")">Year</a>
+  </div>
+</div>
     </div>
 </div>
 <div class="row">
@@ -162,12 +223,6 @@ img2{
     <div class="component__weather-box"></div>
   </div>
 </font>
-
-
-<button onclick="changer(urlBase + "week")">change to week data</button>
-<button onclick="changer(urlBase + "month")">change to month data</button>
-<button onclick="changer(urlBase + "year")">change to year data</button>
-
 
 
 <script>

@@ -233,9 +233,9 @@
                         <div class="dropdown" style="float:right;">
                             <button class="dropbutton">Timescale <span class="caret"></span></button>
                             <div class="dropdown-content">
-                                <a onclick="changer(urlBase + " week ")">Week</a>
-                                <a onclick="changer(urlBase + " month ")">Month</a>
-                                <a onclick="changer(urlBase + " year ")">Year</a>
+                                <a onclick="changer(urlBase + 'week')">Week</a>
+                                <a onclick="changer(urlBase + 'month')">Month</a>
+                                <a onclick="changer(urlBase + 'year')">Year</a>
                             </div>
                         </div>
                     </div>
@@ -345,7 +345,7 @@
 
         <script>
 //TO ACTUALLY CONNECT TO BACKEND, CHANGE URLINIT TO CORRECT URL and go to line 534
-var urlInit = "https://api.myjson.com/bins/njdx3";
+var urlInit = "http://127.0.0.1:8000/initialize";
 var urlBase = "http://127.0.0.1:8000/energyapi?timescale=";
 var urlWeather = 'http://api.openweathermap.org/data/2.5/weather?q=Madison&APPID=c8b07290a27f02e96c2277779d1591bd&units=imperial';
 
@@ -680,16 +680,7 @@ function repeatUpdate() {
             document.getElementById('analogyImage').src= data.imageURL;
             console.log(data.imageURL);
    //DELETE if/else and uncomment line below
-    //     changer(urlBase + timescale);
-         
-             if(timescale == "week")
-                changer('https://api.myjson.com/bins/tm4ub');
-            else if(timescale == "month")
-                 changer('https://api.myjson.com/bins/lknmf');
-            else if(timescale == "year")
-                changer('https://api.myjson.com/bins/pxobn');
-          
-
+            changer(urlBase + timescale);
           }
     }
 

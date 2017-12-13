@@ -337,7 +337,7 @@
             </div>
             <div class="component__weather-box"></div>
         </div>
-        <a href="https://win.wisc.edu/organization/helios">
+        <a href="http://www.helios-uw.com/">
             <img src="admin/HeliosLogo.png" alt="GO WISCONSIN!" style="float: right;width:15%;height:15%">
         </a>
         </font>
@@ -451,28 +451,46 @@ var chartSpeed = Highcharts.chart('gauge', Highcharts.merge(gaugeOptions, {
 //////////////////////////////
 //create trigger to resizeEnd event     
 $(window).resize(function() {
-    if(this.resizeTO) clearTimeout(this.resizeTO);
-    this.resizeTO = setTimeout(function() {
-        $(this).trigger('resizeEnd');
-    }, 50);
+    //changer('https://api.myjson.com/bins/yishj');
+    changer(urlBase + timescale);
+    /*
+    if(timescale == "week")
+        changer('https://api.myjson.com/bins/yishj');
+    else if(timescale == "month")
+        changer('https://api.myjson.com/bins/lknmf');
+    else if(timescale == "year")
+        changer('https://api.myjson.com/bins/pxobn');
+    */
+
 });
 
-    google.charts.load('current', {packages: ['corechart', 'bar']});
-    google.charts.setOnLoadCallback(drawBasic);
+ google.charts.load('current', {packages: ['corechart', 'bar']});
+ google.charts.setOnLoadCallback(drawBasic);
 
     function drawBasic() {
-      var data = new google.visualization.arrayToDataTable(weekChart);
-
-      var options = {
+        var data = new google.visualization.arrayToDataTable(timeChart);
+ var options = {
         legend: { position: "none" },
-        hAxis : {textColor: '#ffffff'}
-       };
+        hAxis : {textColor: '#ffffff '},
+        bars: 'vertical',
+                colors:['#11B29C'],
 
-      var chart = new google.charts.Bar(
+        series: {
+            0: { axis: 'kWh' }, // Bind series 0 to an axis named 'distance'.
+          },
+        axes: {
+            y: {
+              kWh: {label: 'kWh'}, // Bottom x-axis.
+            }
+          }
+       };
+    
+
+      chart = new google.charts.Bar(
         document.getElementById('chart_div'));
-        
-$(window).on('resizeEnd', function() {
-      chart.draw(data, options);
+        $(window).on('resizeEnd', function() {
+      //chart.draw(data, options);
+            chart.draw(data, options);
       });
     }
 
